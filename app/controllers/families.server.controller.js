@@ -36,13 +36,7 @@ exports.create = function(req, res) {
 			if (err) {
 				return handleErr(err,res);
 			}
-			console.log('logging in again (?)');
-			req.login(user, function(err) {
-				if (err) {
-					return handleErr(err,res);
-				}
-				res.jsonp(family);
-			});
+			res.jsonp(family);
 		});
 	});
 };

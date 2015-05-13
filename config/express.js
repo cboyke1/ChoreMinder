@@ -99,6 +99,7 @@ module.exports = function(db) {
 	// use passport session
 	app.use(passport.initialize());
 	app.use(passport.session());
+	app.use(passport.authenticate('remember-me'));
 
 	// connect flash for flash messages
 	app.use(flash());

@@ -5,9 +5,11 @@
  */
 var _ = require('lodash'),
 	errorHandler = require('../errors.server.controller'),
+	Token = require('../../token'),
 	mongoose = require('mongoose'),
 	passport = require('passport'),
 	User = mongoose.model('User');
+
 
 /**
  * Signup
@@ -24,7 +26,7 @@ exports.signup = function(req, res) {
 	user.provider = 'local';
 	user.displayName = user.firstName + ' ' + user.lastName;
 
-	// Then save the user 
+	// Then save the user
 	user.save(function(err) {
 		if (err) {
 			return res.status(400).send({
@@ -50,19 +52,34 @@ exports.signup = function(req, res) {
  * Signin after passport authentication
  */
 exports.signin = function(req, res, next) {
+	console.log('Signing in');
 	passport.authenticate('local', function(err, user, info) {
 		if (err || !user) {
 			res.status(400).send(info);
+			console.log('authentication failed');
 		} else {
 			// Remove sensitive data before login
 			user.password = undefined;
 			user.salt = undefined;
+			console.log('auth success');
 
 			req.login(user, function(err) {
 				if (err) {
 					res.status(400).send(err);
 				} else {
-					res.json(user);
+					console.log('issue remember me');
+					//
+					//if (!req.body.remember_me) { return done(null, user); }
+
+					Token.issueToken(user, function(err, token) {
+						if (err) {
+							res.status(400).send(err);
+						} else {
+							console.log('sending cookie');
+						 	res.cookie('remember_me', token, { path: '/', httpOnly: true, maxAge: 604800000 });
+							res.json(user);
+						}
+					});
 				}
 			});
 		}
