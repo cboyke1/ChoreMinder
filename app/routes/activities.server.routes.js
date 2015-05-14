@@ -7,11 +7,11 @@ module.exports = function(app) {
 	// Activities Routes
 	app.route('/activities')
 		.get(activities.list)
-		.post(users.hasAuthorization(['parent']), activities.create);
+		.post(activities.create);
 
 	app.route('/activities-mine')
 		.get(activities.listMine);
-		
+
 	app.route('/activities/:activityId')
 		.get(activities.read)
 		.put(users.requiresLogin, activities.hasAuthorization, activities.update)

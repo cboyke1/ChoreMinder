@@ -15,11 +15,13 @@ function sendError(err,res) {
 	res.status(400).send({ message: errorHandler.getErrorMessage(err) });
 }
 
+
+/* Recalculate user's points */
 function updateUserPoints(userId) {
 
-	User.findById(userId,function(err,user) {
+	User.findOne({_id: userId}, '-salt -password',userId,function(err,user) {
 			console.log('updating points for ' + user.displayName);
-			Activity.find({'user': user._id},function(err,res) {
+			Activity.find({'user': user._id, 'status': 'approved'},function(err,res) {
 				if(err) return;
 				var points=0;
 				console.log(res.length + ' activities for ' + user.displayName);
@@ -68,9 +70,13 @@ exports.create = function(req, res) {
 	var activity = new Activity(req.body);
 	activity.createdBy = req.user;
 	activity.family = req.user.family;
+	if(req.user.parent) {
+		activity.status='approved';
+	}
+	if(req.user.child) {
+		activity.status='pending';
+	}
 
-	console.log('ACT:');
-	console.log(activity);
 	activity.save(function(err) {
 		if (err) {
 			return res.status(400).send({
@@ -104,6 +110,7 @@ exports.update = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
+			updateUserPoints(activity.user);
 			res.jsonp(activity);
 		}
 	});
@@ -131,7 +138,11 @@ exports.delete = function(req, res) {
  * List of Activities
  */
 exports.list = function(req, res) {
-	Activity.find().sort('-created').populate('chore user').exec(function(err, activities) {
+	var criteria={};
+	if(req.user.child) {
+		criteria={user: req.user._id};
+	}
+	Activity.find(criteria).sort('-created').populate('chore user').exec(function(err, activities) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)

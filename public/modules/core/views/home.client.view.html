@@ -1,17 +1,31 @@
 <section data-ng-controller="HomeController">
 
 	<div>
-		<h2>Welcome to ChoreMinder!</h2>
-		<p>The fun and easy way to track and manage your chores :-)</p>
+		<h3><em>Welcome to ChoreMinder</em></h3>
+		<p>The fun and easy way to track and manage your chores!</p>
 		<div ng-show="!authentication.user">
-				Click
+			<center>
+				<a class="btn btn-primary" href="/#!/signin"> Sign In</a>.
+				<p>
+				or
+				<p>
 				<a href="/#!/signup">Sign Up</a>
-				to get started, or <a href="/#!/signin"> Sign In</a> if you're already registered.
+			</center>
 		</div>
 	 <div ng-show="authentication.user.parent">
 			<div ng-include="'/modules/families/views/view-family.client.view.html'"></div>
-
 	 </div>
+
+	<div ng-show="authentication.user.child">
+		<center>
+			<h4>Hello, {{ authentication.user.displayName}}.  You have {{authentication.user.points}} points</h4>
+			<br>
+			<a class="btn btn-primary" href="/#!/activities/create">Create An Activity</a>
+			<a class="btn btn-primary" href="/#!/activities">See My Activities</a>
+
+		</center>
+	</div>
+
 
 
 </section>

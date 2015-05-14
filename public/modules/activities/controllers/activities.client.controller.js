@@ -13,6 +13,13 @@ angular.module('activities').controller('ActivitiesController', ['$scope', '$res
 			$scope.chore='';
 		};
 
+		$scope.pendingFilter = function(a) {
+			if($scope.showPending) {
+				return (a.status==='pending');
+			}
+			return true;
+		}
+
 
 		$scope.setChild = function(elt) {
 			$scope.child=elt.c._id;
@@ -29,17 +36,24 @@ angular.module('activities').controller('ActivitiesController', ['$scope', '$res
 
 		// Create new Activity
 		$scope.create = function() {
-			
+
 			// Create new Activity object
 			var activity = new Activities ({
 				chore: this.chore,
 				points: this.points,
-				user: this.child,
 				notes: this.notes
 			});
+			// Set user to chosen user, or current user if not parent
+			if($scope.authentication.user.parent) {
+				activity.user = this.child;
+				activity.status = 'approved';
+			} else {
+				activity.user = $scope.authentication.user._id;
+				activity.status='pending';
+			}
+
 			console.log('CREATE');
 			console.log(activity);
-
 
 			// Redirect after save
 			activity.$save(function(response) {
@@ -52,22 +66,24 @@ angular.module('activities').controller('ActivitiesController', ['$scope', '$res
 
 		// Remove existing Activity
 		$scope.remove = function(activity) {
+			console.log("REMOVE");
 			if ( activity ) {
 				activity.$remove();
-				$location.path('/');
+				$location.path('activities');
 			} else {
 				$scope.activity.$remove(function() {
-					$location.path('/');
+					$location.path('activities');
 				});
 			}
 		};
 
 		// Update existing Activity
 		$scope.update = function() {
+			console.log('UPDATE');
 			var activity = $scope.activity;
 
 			activity.$update(function() {
-				$location.path('activities/' + activity._id);
+				$location.path('activities');
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});

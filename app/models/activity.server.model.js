@@ -28,6 +28,10 @@ var ActivitySchema = new Schema({
 	notes: {
 		type: String
 	},
+	status: {
+		type: String,
+		enum: ['pending','approved','rejected']
+	},
 	created: {
 		type: Date,
 		default: Date.now

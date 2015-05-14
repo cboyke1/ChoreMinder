@@ -1,18 +1,37 @@
 <section data-ng-controller="ActivitiesController" data-ng-init="find()">
+
     <div class="page-header">
-        <h2>Activities</h2>
+        <h3>Activities</h3>
     </div>
+    <h4>
+      <input type="checkbox" ng-model="showPending">&nbsp;Show Pending
+    </h4>
     <div class="list-group">
-        <a data-ng-repeat="activity in activities" data-ng-href="#!/activities/{{activity._id}}" class="list-group-item">
-          {{ activity.user.displayName }}
-          &nbsp;
-          {{ activity.chore.name }}
-          &nbsp;
-          {{ activity.pointsc }}
-          <br>
-				  {{ activity.created | date:'short' }}
-        </a>
+      <div class="list-group-item" ng-repeat="activity in activities|filter:pendingFilter">
+
+        <span ng-if ="authentication.user.parent">
+         <a data-ng-href="#!/activities/{{activity._id}}/edit">
+            <h4>{{ activity.chore.name }}
+              <span ng-if="activity.status=='pending'" class="pull-right">?</span>
+            </h4>
+          </a>
+        </span>
+        <span ng-if ="authentication.user.child">
+            <h4>{{ activity.chore.name }}</h4>
+        </span>
+
+          <em>By
+                <strong> {{ activity.user.displayName }}</strong> on
+                {{ activity.created | date:'M/d @ h:m a' }}.  {{ activity.points}} points,
+              Status: {{ activity.status }}
+          <span ng-if="activity.notes">
+            <br>
+            <strong>Notes:</strong>{{activity.notes}}
+          </span>
+          </em>
+      </div>
     </div>
+
     <div class="alert alert-warning text-center" data-ng-hide="!activities.$resolved || activities.length">
     	No Activities yet, why don't you <a href="/#!/activities/create">create one</a>?
     </div>

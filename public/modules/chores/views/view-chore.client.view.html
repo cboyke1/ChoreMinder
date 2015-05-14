@@ -3,7 +3,7 @@
 		<h1 data-ng-bind="chore.name"></h1>
 		Points: {{ chore.points }}
 	</div>
-	<div class="pull-right" data-ng-show="((authentication.user) && (authentication.user.role == 'admin))">
+	<div class="pull-right" data-ng-show="((authentication.user) && (authentication.user.admin))">
 		<a class="btn btn-primary" href="/#!/chores/{{chore._id}}/edit">
 			<i class="glyphicon glyphicon-edit"></i>
 		</a>

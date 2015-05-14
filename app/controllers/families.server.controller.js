@@ -32,6 +32,9 @@ exports.create = function(req, res) {
 		}
 		console.log('Adding family to user. User ID:' + user._id + ', family: ' + family._id);
 		user.family=family;
+		// Don't overwrite salt or pw.
+		user.salt = undefined;
+		user.password = undefined;
 		user.save(function(err) {
 			if (err) {
 				return handleErr(err,res);

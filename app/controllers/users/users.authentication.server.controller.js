@@ -90,6 +90,7 @@ exports.signin = function(req, res, next) {
  * Signout
  */
 exports.signout = function(req, res) {
+	res.clearCookie('remember_me');
 	req.logout();
 	res.redirect('/');
 };

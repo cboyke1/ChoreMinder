@@ -104,6 +104,8 @@ var UserSchema = new Schema({
 });
 
 
+/* To simplify the HTML */
+
 UserSchema.virtual('parent').get(function() {
 	return this.roles && this.roles.indexOf('parent') !== -1;
 });
@@ -111,6 +113,12 @@ UserSchema.virtual('parent').get(function() {
 UserSchema.virtual('child').get(function() {
 	return this.roles && this.roles.indexOf('child') !== -1;
 });
+
+UserSchema.virtual('admin').get(function() {
+	return this.roles && this.roles.indexOf('admin') !== -1;
+});
+
+
 /**
  * Hook a pre save method to hash the password
  */

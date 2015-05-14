@@ -1,4 +1,8 @@
 <section data-ng-controller="ActivitiesController" data-ng-init="init()">
+  <div ng-show="authentication.user.parent">
+
+  </div>
+
     <div class="page-header">
         <h4>New Activity</h4>
     </div>
@@ -6,23 +10,28 @@
         <form class="form-horizontal" data-ng-submit="create()" novalidate>
             <fieldset>
                 <div class="form-group">
-                  <label class="control-label" for="child">Child:</label>
-                  <span ng-repeat="c in initData.family.children">
-                    <input type="radio" name="child" value="{{ c._id }}" ng-click="setChild(this)">&nbsp;{{ c.displayName }}&nbsp;&nbsp;
-                  </span>
-                  <br>
+                  <div ng-show="authentication.user.parent">
+                    <label class="control-label" for="child">Child:</label>
+                    <span ng-repeat="c in initData.family.children">
+                      <input type="radio" name="child" value="{{ c._id }}" ng-click="setChild(this)">&nbsp;{{ c.displayName }}&nbsp;&nbsp;
+                    </span>
+                    <br>
+                  </div>
+
                   <label class="control-label" for="chore">Chore</label>
                   <div ng-repeat="c in initData.chores">
                     <input type="radio" ng-model="chore" name="chore" ng-click="setPoints(this)" value="{{ c._id}}">{{ c.name }}
                   </div>
 
+                <div ng-show="authentication.user.parent">
+
                   <label class="control-label" for="points" >Points</label>
                   <input type="number" class="form-control" ng-model="points" size="5" required>
+                </div>
 
                   <label class="control-label" for="notes">Notes</label>
                   <br>
-                  <textarea ng-model="notes"></textarea>
-
+                  <textarea ng-model="notes" cols="30"></textarea>
 
                 </div>
                 <div class="form-group">
