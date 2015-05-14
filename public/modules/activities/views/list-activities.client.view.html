@@ -1,34 +1,22 @@
 <section data-ng-controller="ActivitiesController" data-ng-init="find()">
 
-    <div class="page-header">
-        <h3>Activities</h3>
-    </div>
-    <h4>
+        <h4>Activities</h4>
       <input type="checkbox" ng-model="showPending">&nbsp;Show Pending
-    </h4>
+      <p>&nbsp;
     <div class="list-group">
-      <div class="list-group-item" ng-repeat="activity in activities|filter:pendingFilter">
+      <div >
 
         <span ng-if ="authentication.user.parent">
-         <a data-ng-href="#!/activities/{{activity._id}}/edit">
-            <h4>{{ activity.chore.name }}
-              <span ng-if="activity.status=='pending'" class="pull-right">?</span>
-            </h4>
+         <a class="list-group-item" ng-repeat="activity in activities|filter:pendingFilter" href="#!/activities/{{activity._id}}/edit">
+            <strong>{{ activity.chore.name }}</strong>
+            <br>
+                <span ng-include="'/modules/activities/views/viewItem.html'"></span>
           </a>
         </span>
         <span ng-if ="authentication.user.child">
             <h4>{{ activity.chore.name }}</h4>
         </span>
 
-          <em>By
-                <strong> {{ activity.user.displayName }}</strong> on
-                {{ activity.created | date:'M/d @ h:m a' }}.  {{ activity.points}} points,
-              Status: {{ activity.status }}
-          <span ng-if="activity.notes">
-            <br>
-            <strong>Notes:</strong>{{activity.notes}}
-          </span>
-          </em>
       </div>
     </div>
 
