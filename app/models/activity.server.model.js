@@ -10,15 +10,17 @@ var mongoose = require('mongoose'),
  * Activity Schema
  */
 var ActivitySchema = new Schema({
-	name: {
-		type: String,
-		default: '',
-		required: 'Please fill Activity name',
-		trim: true
-	},
 	user: {
 		type: Schema.ObjectId,
 		ref: 'User'
+	},
+	family: {
+		type: Schema.ObjectId,
+		ref: 'Family'
+	},
+	chore: {
+		type: Schema.ObjectId,
+		ref: 'Chore'
 	},
 	points: {
 		type: Number

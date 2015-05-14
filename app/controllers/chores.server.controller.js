@@ -73,7 +73,7 @@ exports.delete = function(req, res) {
  * List of Chores
  */
 exports.list = function(req, res) {
-	Chore.find().sort('-created').populate('user', 'displayName').exec(function(err, chores) {
+	Chore.find().exec(function(err, chores) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -100,7 +100,7 @@ exports.choreByID = function(req, res, next, id) {
  * Chore authorization middleware
  */
 exports.hasAuthorization = function(req, res, next) {
-	if (req.user.roles.indexOf('admin') == -1) {
+	if (req.user.roles.indexOf('admin') === -1) {
 		return res.status(403).send('User is not authorized');
 	}
 	next();

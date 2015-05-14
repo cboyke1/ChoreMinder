@@ -37,6 +37,9 @@ var UserSchema = new Schema({
 		default: '',
 		validate: [validateLocalStrategyProperty, 'Please fill in your last name']
 	},
+	points: {
+		type: Number
+	},
 	displayName: {
 		type: String,
 		trim: true
@@ -75,7 +78,7 @@ var UserSchema = new Schema({
 	roles: {
 		type: [{
 			type: String,
-			enum: ['user', 'admin']
+			enum: ['user', 'admin', 'parent', 'child']
 		}],
 		default: ['user']
 	},
@@ -93,8 +96,21 @@ var UserSchema = new Schema({
 	resetPasswordExpires: {
 		type: Date
 	}
+},
+{
+	toJSON: {
+    virtuals: true
+  }
 });
 
+
+UserSchema.virtual('parent').get(function() {
+	return this.roles && this.roles.indexOf('parent') !== -1;
+});
+
+UserSchema.virtual('child').get(function() {
+	return this.roles && this.roles.indexOf('child') !== -1;
+});
 /**
  * Hook a pre save method to hash the password
  */

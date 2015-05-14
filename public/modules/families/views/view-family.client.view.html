@@ -1,34 +1,29 @@
 <section data-ng-controller="FamiliesController" data-ng-init="findOne()">
-	<div class="page-header">
-		<h1 data-ng-bind="family.name"></h1>
-	</div>
+	<hr>
+	<center>
+		<h4>{{ family.name }}</h4>
+		<span ng-show="authentication.user.parent">parent</span>
+	</center>
 
+	<div data-ng-show="false">
 		<h4>Parents</h4>
 	<ul>
 		<li data-ng-repeat="person in family.parents">{{ person.displayName }}</li>
 		<li data-ng-repeat="(key, value) in person">{{ person }}</li>
-
 	</ul>
+</div>
 		<h4>Children</h4>
-	<ul>
-		<li data-ng-repeat="user in family.children">{{ user.displayName }}</li>
-	</ul>
-
-
-	<div class="pull-right" data-ng-show="((authentication.user) && (authentication.user._id == family.user._id))">
-		<a class="btn btn-primary" href="/#!/families/{{family._id}}/edit">
-			<i class="glyphicon glyphicon-edit"></i>
-		</a>
-		<a class="btn btn-primary" data-ng-click="remove();">
-			<i class="glyphicon glyphicon-trash"></i>
-		</a>
+	<div class="list-group">
+		<span class="list-group-item" data-ng-repeat="user in family.children">
+			<span class="pull-left"> {{ user.displayName }}</span>
+		  <span class="pull-right"> {{ user.points }}</span><br>
+		</span>
 	</div>
-	<small>
-		<em class="text-muted">
-			Posted on
-			<span data-ng-bind="family.created | date:'mediumDate'"></span>
-			by
-			<span data-ng-bind="family.user.displayName"></span>
-		</em>
-	</small>
+
+
+<center ng-show="authentication.user.parent">
+	<a class="btn btn-primary" href="#!/activities/create">Record an activity</a>&nbsp;&nbsp;
+	<a class="btn btn-primary" href="#!/activities">List Activities</a>
+
+</center>
 </section>

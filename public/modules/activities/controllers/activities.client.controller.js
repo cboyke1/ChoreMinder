@@ -1,23 +1,50 @@
 'use strict';
 
 // Activities controller
-angular.module('activities').controller('ActivitiesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Activities',
-	function($scope, $stateParams, $location, Authentication, Activities) {
+angular.module('activities').controller('ActivitiesController', ['$scope', '$resource', '$stateParams', '$location', 'Authentication', 'Activities',
+	function($scope, $resource, $stateParams, $location, Authentication, Activities) {
 		$scope.authentication = Authentication;
+
+		$scope.init = function() {
+			var FormData = $resource('/acInitForm');
+			$scope.initData = FormData.get();
+			$scope.points=0;
+			$scope.child='';
+			$scope.chore='';
+		};
+
+
+		$scope.setChild = function(elt) {
+			$scope.child=elt.c._id;
+			console.log($scope.chore);
+		};
+
+
+		$scope.setPoints = function(elt) {
+			$scope.chore=elt.c._id;
+			$scope.points=elt.c.points;
+			console.log($scope.chore);
+		};
+
 
 		// Create new Activity
 		$scope.create = function() {
+			
 			// Create new Activity object
 			var activity = new Activities ({
-				name: this.name
+				chore: this.chore,
+				points: this.points,
+				user: this.child,
+				notes: this.notes
 			});
+			console.log('CREATE');
+			console.log(activity);
+
 
 			// Redirect after save
 			activity.$save(function(response) {
-				$location.path('activities/' + response._id);
+				$location.path('/');
 
-				// Clear form fields
-				$scope.name = '';
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
@@ -25,17 +52,12 @@ angular.module('activities').controller('ActivitiesController', ['$scope', '$sta
 
 		// Remove existing Activity
 		$scope.remove = function(activity) {
-			if ( activity ) { 
+			if ( activity ) {
 				activity.$remove();
-
-				for (var i in $scope.activities) {
-					if ($scope.activities [i] === activity) {
-						$scope.activities.splice(i, 1);
-					}
-				}
+				$location.path('/');
 			} else {
 				$scope.activity.$remove(function() {
-					$location.path('activities');
+					$location.path('/');
 				});
 			}
 		};
@@ -58,7 +80,7 @@ angular.module('activities').controller('ActivitiesController', ['$scope', '$sta
 
 		// Find existing Activity
 		$scope.findOne = function() {
-			$scope.activity = Activities.get({ 
+			$scope.activity = Activities.get({
 				activityId: $stateParams.activityId
 			});
 		};

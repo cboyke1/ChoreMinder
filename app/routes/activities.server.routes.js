@@ -7,12 +7,18 @@ module.exports = function(app) {
 	// Activities Routes
 	app.route('/activities')
 		.get(activities.list)
-		.post(users.requiresLogin, activities.create);
+		.post(users.hasAuthorization(['parent']), activities.create);
 
+	app.route('/activities-mine')
+		.get(activities.listMine);
+		
 	app.route('/activities/:activityId')
 		.get(activities.read)
 		.put(users.requiresLogin, activities.hasAuthorization, activities.update)
 		.delete(users.requiresLogin, activities.hasAuthorization, activities.delete);
+
+	app.route('/acInitForm')
+		.get(activities.initForm);
 
 	// Finish by binding the Activity middleware
 	app.param('activityId', activities.activityByID);

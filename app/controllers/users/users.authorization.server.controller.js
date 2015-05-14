@@ -41,7 +41,12 @@ exports.hasAuthorization = function(roles) {
 	var _this = this;
 
 	return function(req, res, next) {
+		console.log('len: ' + roles.length);
+		console.log('length: ' + req.user.roles.length);
+		console.log(req.user.roles[2] === roles);
+		console.log('required role: ' + roles + ', user roles: ' + req.user.roles);
 		_this.requiresLogin(req, res, function() {
+			console.log('intersection: ' + _.intersection(req.user.roles, roles));
 			if (_.intersection(req.user.roles, roles).length) {
 				return next();
 			} else {

@@ -54,12 +54,12 @@ module.exports.consumeRememberMeToken = function(token, fn) {
       console.log('Token not found');
     }
     // Now delete it
-    //Token.remove({'token': token},function(err) {
-    //  if(err) {
-    //    console.log(err);
-    //    return null;
-    //  }
-    //});
+    Token.remove({'token': token},function(err) {
+      if(err) {
+        console.log(err);
+        return null;
+      }
+    });
     return fn(null,uid);
   });
 };

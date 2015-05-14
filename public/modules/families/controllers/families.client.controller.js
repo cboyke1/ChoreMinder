@@ -25,7 +25,7 @@ angular.module('families').controller('FamiliesController', ['$scope', '$statePa
 
 		// Remove existing Family
 		$scope.remove = function(family) {
-			if ( family ) { 
+			if ( family ) {
 				family.$remove();
 
 				for (var i in $scope.families) {
@@ -58,8 +58,13 @@ angular.module('families').controller('FamiliesController', ['$scope', '$statePa
 
 		// Find existing Family
 		$scope.findOne = function() {
-			$scope.family = Families.get({ 
-				familyId: $stateParams.familyId
+			var familyId = $stateParams.familyId;
+			if(!familyId) {
+				familyId = $scope.authentication.user.family;
+			}
+			console.log('family id: ' + familyId);
+			$scope.family = Families.get({
+				familyId: familyId
 			});
 		};
 	}
