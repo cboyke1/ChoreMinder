@@ -18,8 +18,7 @@ angular.module('activities').controller('ActivitiesController', ['$scope', '$res
 				return (a.status==='pending');
 			}
 			return true;
-		}
-
+		};
 
 		$scope.setChild = function(elt) {
 			$scope.child=elt.c._id;
@@ -66,7 +65,7 @@ angular.module('activities').controller('ActivitiesController', ['$scope', '$res
 
 		// Remove existing Activity
 		$scope.remove = function(activity) {
-			console.log("REMOVE");
+			console.log('REMOVE');
 			if ( activity ) {
 				activity.$remove();
 				$location.path('activities');
