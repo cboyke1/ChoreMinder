@@ -4,8 +4,6 @@
       <input type="checkbox" ng-model="showPending">&nbsp;Show Pending
       <p>&nbsp;
     <div class="list-group">
-      <div >
-
         <span ng-if ="authentication.user.parent">
          <a class="list-group-item" ng-repeat="activity in activities|filter:pendingFilter" href="#!/activities/{{activity._id}}/edit">
             <strong>{{ activity.chore.name }}</strong>
@@ -14,7 +12,11 @@
           </a>
         </span>
         <span ng-if ="authentication.user.child">
-            <h4>{{ activity.chore.name }}</h4>
+          <a class="list-group-item" ng-repeat="activity in activities|filter:pendingFilter" href="#!/activities/{{activity._id}}">
+            <strong>{{ activity.chore.name }}</strong>
+            <br>
+                <span ng-include="'/modules/activities/views/viewItem.html'"></span>
+           </a>
         </span>
 
       </div>
