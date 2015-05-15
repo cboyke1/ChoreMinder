@@ -1,5 +1,10 @@
 <em>By
-      <strong> {{ activity.user.displayName }}</strong> on
+      <strong>
+      <span ng-repeat="user in activity.users">
+        {{user.displayName}}<span ng-if="!$last">, </span>
+
+      </span>
+      </strong> on
       {{ activity.created | date:'M/d @ h:m a' }}.  {{ activity.points}} points
 </em>
 <span>

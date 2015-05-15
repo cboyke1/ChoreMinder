@@ -2,10 +2,12 @@
     <div class="page-header">
         <h4>Edit Activity</h4>
     </div>
-    {{ activity.user.displayName}}, &nbsp;
-    {{ activity.chore.name}}, &nbsp;
-    <br>
-    {{ activity.created | date:"M/d @ h:mm a"}}
+
+    <span ng-repeat="user in activity.users">
+      {{user.displayName}}<span ng-if="!$last">, </span>
+    </span>&nbsp;
+
+    {{ activity.chore.name}}, &nbsp;    {{ activity.created | date:"M/d @ h:mm a"}}
     <div class="col-md-12">
         <form class="form-horizontal" novalidate>
             <fieldset>

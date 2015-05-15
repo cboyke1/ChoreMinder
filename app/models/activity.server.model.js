@@ -10,10 +10,7 @@ var mongoose = require('mongoose'),
  * Activity Schema
  */
 var ActivitySchema = new Schema({
-	user: {
-		type: Schema.ObjectId,
-		ref: 'User'
-	},
+	users: [{type: Schema.ObjectId, ref: 'User'}],
 	family: {
 		type: Schema.ObjectId,
 		ref: 'Family'
@@ -30,7 +27,7 @@ var ActivitySchema = new Schema({
 	},
 	status: {
 		type: String,
-		enum: ['pending','approved','rejected']
+		enum: ['requested','pending','approved','rejected']
 	},
 	created: {
 		type: Date,

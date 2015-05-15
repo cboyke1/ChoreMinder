@@ -2,16 +2,8 @@
 	<hr>
 	<center>
 		<h4>{{ family.name }}</h4>
-		<span ng-show="authentication.user.parent">parent</span>
 	</center>
 
-	<div data-ng-show="false">
-		<h4>Parents</h4>
-	<ul>
-		<li data-ng-repeat="person in family.parents">{{ person.displayName }}</li>
-		<li data-ng-repeat="(key, value) in person">{{ person }}</li>
-	</ul>
-</div>
 		<h4>Children</h4>
 	<div class="list-group">
 		<span class="list-group-item" data-ng-repeat="user in family.children">
@@ -19,7 +11,6 @@
 		  <span class="pull-right"> {{ user.points }}</span><br>
 		</span>
 	</div>
-
 
 <center ng-show="authentication.user.parent">
 	<a class="btn btn-primary" href="#!/activities/create">Record an activity</a>&nbsp;&nbsp;

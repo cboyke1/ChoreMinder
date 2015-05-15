@@ -7,24 +7,25 @@
         <h4>New Activity</h4>
     </div>
     <div class="col-md-12">
-        <form class="form-horizontal" data-ng-submit="create()" novalidate>
+        <form class="form-horizontal" id="createForm" data-ng-submit="create()" novalidate>
             <fieldset>
                 <div class="form-group">
-                  <div ng-show="authentication.user.parent">
+                  <div ng-if="authentication.user.parent">
                     <label class="control-label" for="child">Child:</label>
-                    <span ng-repeat="c in initData.family.children">
-                      <input type="radio" name="child" value="{{ c._id }}" ng-click="setChild(this)">&nbsp;{{ c.displayName }}&nbsp;&nbsp;
+                    <span ng-repeat="u in initData.family.children">
+                      <input type="checkbox" ng-true-value="{{u._id}}" ng-false-value="-{{u._id}}" ng-model="userCB" ng-change="userSelect(this)">&nbsp;{{u.displayName}}&nbsp;&nbsp;
                     </span>
                     <br>
+                    <span ng-if="errorNoChild"><font color="red">Please select at least one child!</font></span>
                   </div>
 
                   <label class="control-label" for="chore">Chore</label>
+                  <span ng-if="errorNoChore"><font color="red">Please select a Chore!</font></span>
                   <div ng-repeat="c in initData.chores">
                     <input type="radio" ng-model="chore" name="chore" ng-click="setPoints(this)" value="{{ c._id}}">{{ c.name }}
                   </div>
 
-                <div ng-show="authentication.user.parent">
-
+                <div ng-if="authentication.user.parent">
                   <label class="control-label" for="points" >Points</label>
                   <input type="number" class="form-control" ng-model="points" size="5" required>
                 </div>
@@ -44,3 +45,8 @@
         </form>
     </div>
     </section>
+<script>
+function foo(elt) {
+  alert(elt);
+}
+</script>

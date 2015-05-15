@@ -15,13 +15,19 @@ function sendError(err,res) {
 	res.status(400).send({ message: errorHandler.getErrorMessage(err) });
 }
 
+var verbose=true;
 
-/* Recalculate user's points */
+
+/* Recalculate points for one user */
 function updateUserPoints(userId) {
 
-	User.findOne({_id: userId}, '-salt -password',userId,function(err,user) {
+	User.findById(userId, '-salt -password',function(err,user) {
+			if(err) {
+				console.log(err);
+				return;
+			}
 			console.log('updating points for ' + user.displayName);
-			Activity.find({'user': user._id, 'status': 'approved'},function(err,res) {
+			Activity.find({'users': user._id, 'status': 'approved'},function(err,res) {
 				if(err) return;
 				var points=0;
 				console.log(res.length + ' activities for ' + user.displayName);
@@ -35,6 +41,13 @@ function updateUserPoints(userId) {
 				});
 			});
 	});
+}
+
+/* Update points for an array of users */
+function updatePoints(users) {
+	for(var i=0; i < users.length ; i++) {
+		updateUserPoints(users[i]);
+	}
 }
 
 
@@ -70,12 +83,11 @@ exports.create = function(req, res) {
 	var activity = new Activity(req.body);
 	activity.createdBy = req.user;
 	activity.family = req.user.family;
-	if(req.user.parent) {
-		activity.status='approved';
-	}
+
 	if(req.user.child) {
 		activity.status='pending';
 	}
+	if(verbose) console.log(activity);
 
 	activity.save(function(err) {
 		if (err) {
@@ -83,7 +95,7 @@ exports.create = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			updateUserPoints(activity.user);
+			updatePoints(activity.users);
 			res.jsonp(activity);
 		}
 	});
@@ -110,7 +122,7 @@ exports.update = function(req, res) {
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			updateUserPoints(activity.user);
+			updatePoints(activity.users);
 			res.jsonp(activity);
 		}
 	});
@@ -121,13 +133,13 @@ exports.update = function(req, res) {
  */
 exports.delete = function(req, res) {
 	var activity = req.activity ;
-	var user = activity.user;
+	var users = activity.users;
 	console.log('In remove');
 	activity.remove(function(err) {
 		if (err) {
 			console.log(err);
 		} else {
-			updateUserPoints(user);
+			updatePoints(users);
 			console.log('delete successful');
 			res.jsonp({});
 		}
@@ -140,9 +152,11 @@ exports.delete = function(req, res) {
 exports.list = function(req, res) {
 	var criteria={};
 	if(req.user.child) {
-		criteria={user: req.user._id};
+		criteria={users: req.user._id};
+	} else {
+		criteria={family: req.user.family};
 	}
-	Activity.find(criteria).sort('-created').populate('chore user').exec(function(err, activities) {
+	Activity.find(criteria).sort('-created').populate('chore users').exec(function(err, activities) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -157,7 +171,7 @@ exports.list = function(req, res) {
  * List of Activities
  */
 exports.listMine = function(req, res) {
-	Activity.find({user: req.user }).sort('-created').populate('chore user').exec(function(err, activities) {
+	Activity.find({users: req.user }).sort('-created').populate('chore users').exec(function(err, activities) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -172,7 +186,7 @@ exports.listMine = function(req, res) {
  * Activity middleware
  */
 exports.activityByID = function(req, res, next, id) {
-	Activity.findById(id).populate('createdBy user chore').exec(function(err, activity) {
+	Activity.findById(id).populate('createdBy users chore').exec(function(err, activity) {
 		if (err) return next(err);
 		console.log(activity);
 		if (! activity) return next(new Error('Failed to load Activity ' + id));
@@ -189,10 +203,8 @@ exports.hasAuthorization = function(req, res, next) {
 
 	console.log('user roles:' + req.user.roles);
 
-	var auth1 = req.user.roles.indexOf('parent') !== -1;
-	var auth2 = (req.activity.user.family.toString() === req.user.family.toString());
-	console.log('auth1: ' + auth1 + ' auth2: ' + auth2);
-	if(auth1 && auth2) {
+	var auth2 = (req.activity.family.toString() === req.user.family.toString());
+	if(req.user.parent && auth2) {
 		next();
 	} else {
 		return res.status(403).send('User is not authorized');
