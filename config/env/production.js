@@ -3,7 +3,7 @@
 module.exports = {
 	db: 'mongodb://localhost/choreminder-dev',
 	app: {
-		title: 'ChoreMinder - Development Environment'
+		title: 'ChoreMinder'
 	},
 	facebook: {
 		clientID: process.env.FACEBOOK_ID || 'APP_ID',
