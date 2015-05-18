@@ -38,7 +38,7 @@ function saveRememberMeToken(token, uid, fn) {
 	});
 }
 
-
+// Read a token from the cookie and look it up in the DB
 module.exports.consumeRememberMeToken = function(token, fn) {
   console.log('reading token ' + token);
   Token.findOne({'token': token},function(err,res) {
@@ -68,7 +68,10 @@ module.exports.consumeRememberMeToken = function(token, fn) {
 module.exports.issueToken = function(user, done) {
   var token = randomString(64);
   saveRememberMeToken(token, user._id, function(err) {
-    if (err) { return done(err); }
+    if (err) {
+      console.log('Error issuing token: ' + err);
+      return done(err);
+    }
     return done(null, token);
   });
 };

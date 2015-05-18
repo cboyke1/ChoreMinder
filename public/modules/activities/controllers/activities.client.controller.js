@@ -187,9 +187,11 @@ angular.module('activities').controller('ActivitiesController', ['$scope', '$res
 			console.log('REMOVE');
 			if(confirm('Are you sure you want to delete this activity?')) {
 				if ( activity ) {
+					console.log('1');
 					activity.$remove();
 					$location.path('/');
 				} else {
+					console.log('2');
 					$scope.activity.$remove(function() {
 						$location.path('/');
 					});

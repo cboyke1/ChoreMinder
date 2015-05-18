@@ -12,17 +12,27 @@ var passport = require('passport'),
 
 
 module.exports = function() {
-	console.log('remember me');
 	passport.use(new RememberMeStrategy(
-
 		function(token, done) {
 			Token.consumeRememberMeToken(token, function(err, uid) {
-	      if (err) { return done(err); }
-	      if (!uid) { return done(null, false); }
+	      if (err) {
+					console.log(err);
+					return done(err);
+				}
+	      if (!uid) {
+					console.log('No UID found ');
+					return done(null, false);
+				}
 
 	      User.findById(uid, function(err, user) {
-	        if (err) { return done(err); }
-	        if (!user) { return done(null, false); }
+	        if (err) {
+						console.log(err);
+						return done(err);
+					}
+	        if (!user) {
+						console.log('user not found');
+						return done(null, false);
+					}
 	        return done(null, user);
 	      });
     	});
