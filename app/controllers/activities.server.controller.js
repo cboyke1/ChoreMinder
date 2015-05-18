@@ -244,7 +244,7 @@ exports.migrate = function(req, res, next) {
 	Activity.find().exec(function(err, activities) {
 		for(var i=0; i < activities.length ; i++) {
 			var a = activities[i];
-			if(a.user && a.users[length]===0) {
+			if(a.user && (!a.users || a.users[length]===0)) {
 				console.log('Updating activity ' + a._id);
 
 				a.users = [ a.user ];
