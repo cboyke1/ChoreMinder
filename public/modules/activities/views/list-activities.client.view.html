@@ -1,28 +1,7 @@
-<section data-ng-controller="ActivitiesController" data-ng-init="find()">
+<span ng-if="authentication.user.parent">
+    <span ng-include="'/modules/activities/views/parentListActivities.html'"></span>
+</span>
 
-        <h4>Activities</h4>
-      <input type="checkbox" ng-model="showPending">&nbsp;Show Pending
-      <p>&nbsp;
-    <div class="list-group">
-        <span ng-if ="authentication.user.parent">
-         <a class="list-group-item" ng-repeat="activity in activities|filter:pendingFilter" href="#!/activities/{{activity._id}}/edit">
-            <strong>{{ activity.chore.name }}</strong>
-            <br>
-                <span ng-include="'/modules/activities/views/viewItem.html'"></span>
-          </a>
-        </span>
-        <span ng-if ="authentication.user.child">
-          <a class="list-group-item" ng-repeat="activity in activities|filter:pendingFilter" href="#!/activities/{{activity._id}}">
-            <strong>{{ activity.chore.name }}</strong>
-            <br>
-                <span ng-include="'/modules/activities/views/viewItem.html'"></span>
-           </a>
-        </span>
-
-      </div>
-    </div>
-
-    <div class="alert alert-warning text-center" data-ng-hide="!activities.$resolved || activities.length">
-    	No Activities yet, why don't you <a href="/#!/activities/create">create one</a>?
-    </div>
-</section>
+<span ng-if="authentication.user.child">
+    <span ng-include="'/modules/activities/views/childListActivities.html'"></span>
+</span>

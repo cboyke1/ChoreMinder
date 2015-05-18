@@ -1,0 +1,10 @@
+<div class="page-header">
+      <h4>Complete Activity</h4>
+</div>
+
+<span ng-include="'/modules/activities/views/viewActivityDetails.html'"></span>
+<br>
+<p>
+<center ng-if="activity.status =='assigned' || activity.status==='open'">
+    <button name="markComplete" ng-click="markComplete()" class="btn-success">Task Completed</button>
+</center>

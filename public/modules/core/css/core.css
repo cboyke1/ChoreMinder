@@ -1,3 +1,13 @@
+div.up-right {
+  position: absolute;
+  right: 10px;
+  top: 60px;
+}
+div.up-left {
+  position: absolute;
+  left: 10px;
+  top: 60px;
+}
 .content {
 	margin-top: 50px;
 }

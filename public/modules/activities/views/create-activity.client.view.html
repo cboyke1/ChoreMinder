@@ -3,22 +3,26 @@
 
   </div>
 
-    <div class="page-header">
-        <h4>New Activity</h4>
-    </div>
+    <center>
+
+        <h4 ng-if="type=='request'">Chore Request</h4>
+        <h4 ng-if="type=='complete'">Chore Completed</h4>
+
+    </center>
     <div class="col-md-12">
         <form class="form-horizontal" id="createForm" data-ng-submit="create()" novalidate>
             <fieldset>
                 <div class="form-group">
                   <div ng-if="authentication.user.parent">
-                    <label class="control-label" for="child">Child:</label>
+                    <label class="control-label" for="child">Child</label><br>
                     <span ng-repeat="u in initData.family.children">
-                      <input type="checkbox" ng-true-value="{{u._id}}" ng-false-value="-{{u._id}}" ng-model="userCB" ng-change="userSelect(this)">&nbsp;{{u.displayName}}&nbsp;&nbsp;
+                      <input type="checkbox" id="{{u._id}}" >&nbsp;{{u.displayName}}&nbsp;&nbsp;
                     </span>
+                    &nbsp;&nbsp;<input type="checkbox" id="selectAll" ng-model="selectAll" ng-change="selectAllChanged(this)"> Select All
                     <br>
-                    <span ng-if="errorNoChild"><font color="red">Please select at least one child!</font></span>
+                    <span ng-if="errorNoChild"><font color="red">&nbsp;Please select at least one child!</font></span>
                   </div>
-
+                  <br>&nbsp;<br>
                   <label class="control-label" for="chore">Chore</label>
                   <span ng-if="errorNoChore"><font color="red">Please select a Chore!</font></span>
                   <div ng-repeat="c in initData.chores">
@@ -26,8 +30,15 @@
                   </div>
 
                 <div ng-if="authentication.user.parent">
-                  <label class="control-label" for="points" >Points</label>
-                  <input type="number" class="form-control" ng-model="points" size="5" required>
+                  <br>&nbsp;<br>
+                  <label class="control-label" for="points" >Points</label><br>
+                  <div>
+                    <a ng-click="minus()"><img src="/modules/core/img/minus-small.png"></a>
+                    <input class="input-sm" type="number" class="form-control" ng-model="points" required>
+                    <a ng-click="plus()"><img src="/modules/core/img/plus-small.png"></a>
+
+                  </div>
+
                 </div>
 
                   <label class="control-label" for="notes">Notes</label>
@@ -36,17 +47,14 @@
 
                 </div>
                 <div class="form-group">
-                    <input type="submit" class="btn btn-default">
+                  <center>
+                    <input type="submit" value="OK" class="btn btn-default">
+                  </center>
                 </div>
-				<div data-ng-show="error" class="text-danger">
-					<strong data-ng-bind="error"></strong>
-				</div>
+  				<div data-ng-show="error" class="text-danger">
+  					<strong data-ng-bind="error"></strong>
+  				</div>
             </fieldset>
         </form>
     </div>
-    </section>
-<script>
-function foo(elt) {
-  alert(elt);
-}
-</script>
+</section>

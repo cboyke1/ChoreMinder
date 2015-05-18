@@ -13,7 +13,7 @@ var mongoose = require('mongoose'),
  */
 exports.create = function(req, res) {
 	var chore = new Chore(req.body);
-	chore.user = req.user;
+	chore.family = req.user.family;
 
 	chore.save(function(err) {
 		if (err) {
@@ -40,6 +40,7 @@ exports.update = function(req, res) {
 	var chore = req.chore ;
 
 	chore = _.extend(chore , req.body);
+	chore.family = req.user.family;
 
 	chore.save(function(err) {
 		if (err) {
@@ -73,7 +74,7 @@ exports.delete = function(req, res) {
  * List of Chores
  */
 exports.list = function(req, res) {
-	Chore.find().exec(function(err, chores) {
+	Chore.find({family: req.user.family}).sort('order').exec(function(err, chores) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)

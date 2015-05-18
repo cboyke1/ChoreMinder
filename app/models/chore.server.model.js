@@ -10,6 +10,12 @@ var mongoose = require('mongoose'),
  * Chore Schema
  */
 var ChoreSchema = new Schema({
+	order: {
+		type: Number
+	},
+	heading: {
+		type: Boolean
+	},
 	name: {
 		type: String,
 		default: '',
@@ -19,6 +25,13 @@ var ChoreSchema = new Schema({
 	points: {
 		type: Number,
 		default: 0
+	},
+	family: {
+		type: Schema.ObjectId,
+		ref: 'Family'
+	},
+	template: {
+		type: Boolean
 	}
 });
 

@@ -1,0 +1,50 @@
+<section data-ng-controller="ActivitiesController" data-ng-init="find()">
+
+<center>
+  <h4>Welcome, {{ authentication.user.displayName}}.  <br>You have {{authentication.user.points}} points</h4>
+</center>
+<div class="up-right">
+  <a href="/#!/activities/create"><img src="/modules/core/img/check.jpg" border=0 alt="Chore Done!"></a>
+</div>
+<p>
+
+    <div class="list-group" ng-if="(activities|filter:myAssigned).length">
+      <h4>Chores Assigned to Me</h4>
+        <a class="list-group-item" ng-repeat="activity in activities|filter:myAssigned|limitTo:8" href="#!/activities/{{activity._id}}/edit">
+          <span ng-include="'/modules/activities/views/viewActivityDetails.html'"></span>
+        </a>
+    </div>
+
+    <!-- Open Activities -->
+
+    <div class="list-group" ng-if="(activities|filter:open).length">
+      <h4>Open (Unassigned) Chores</h4>
+        <a class="list-group-item" ng-repeat="activity in activities|filter:open|limitTo:8" href="#!/activities/{{activity._id}}/edit">
+          <span ng-include="'/modules/activities/views/viewActivityDetails.html'"></span>
+        </a>
+    </div>
+
+
+    <!-- My Pending -->
+
+    <div class="list-group" ng-if="(activities|filter:myPending).length">
+      <hr>
+      <h4>My Completed Chores - Pending Review</h4>
+        <a class="list-group-item" ng-repeat="activity in activities|filter:myPending|limitTo:8" href="#!/activities/{{activity._id}}/edit">
+          <span ng-include="'/modules/activities/views/viewActivityDetails.html'"></span>
+        </a>
+    </div>
+
+
+    <!-- My Completed -->
+
+    <div class="list-group" ng-if="(activities|filter:myApproved).length">
+      <hr>
+      <h4>My Completed Chores - Approved</h4>
+        <a class="list-group-item" ng-repeat="activity in activities|filter:myApproved|limitTo:8" href="#!/activities/{{activity._id}}/edit">
+          <span ng-include="'/modules/activities/views/viewActivityDetails.html'"></span>
+        </a>
+    </div>
+
+
+</section>

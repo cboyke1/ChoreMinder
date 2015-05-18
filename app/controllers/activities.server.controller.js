@@ -9,7 +9,10 @@ var mongoose = require('mongoose'),
 	Chore = mongoose.model('Chore'),
 	Family = mongoose.model('Family'),
 	User = mongoose.model('User'),
+	AWS = require('aws-sdk'),
 	_ = require('lodash');
+
+AWS.config.loadFromPath('./auth/aws.json');
 
 function sendError(err,res) {
 	res.status(400).send({ message: errorHandler.getErrorMessage(err) });
@@ -57,14 +60,14 @@ function updatePoints(users) {
 exports.initForm = function(req, res) {
 	// Get all chores (for this family)
 
-	Chore.find().exec(function(err, chores) {
+	Chore.find({family: req.user.family}).exec(function(err, chores) {
 		if (err) {
 			return sendError(err,res);
 		} else {
 			Family.findById(req.user.family)
-				.populate({path: 'children',
-									 select: '_id displayName points'})
-				.exec(function(err, family) {
+			.populate({path: 'children',
+								 select: '_id displayName points'})
+			.exec(function(err, family) {
 				if (err) {
 					return sendError(err,res);
 				} else {
@@ -76,30 +79,70 @@ exports.initForm = function(req, res) {
 	});
 };
 
+function sendSMSForUser(activity,user) {
+	var smsTopic = user.smsTopic;
+	if(!smsTopic) {
+		console.log('no topic for user: ' + user.displayName);
+		return;
+	}
+	var sns = new AWS.SNS({params: {TopicArn: smsTopic}});
+	sns.publish({Message: activity.chore.name + '\n' + activity.notes}, function(err, data) {
+		if (err) console.log(err, err.stack); // an error occurred
+		else     console.log(data);           // successful response
+	});
+}
+
+function sendSMSForActivity(activity) {
+	console.log('SEND SMS for activity');
+
+	// Use mongoose to populate all fields.
+
+	Activity.findById(activity._id).populate('users chore').exec(function(err, activity) {
+		if(err) {
+			console.log(err);
+		} else {
+			console.log(activity);
+			for(var i=0;i<activity.users.length;i++) {
+				sendSMSForUser(activity,activity.users[i]);
+			}
+
+		}
+	});
+}
+
 /**
  * Create an Activity
  */
 exports.create = function(req, res) {
+	console.log('CREATE');
 	var activity = new Activity(req.body);
+	console.log(activity);
 	activity.createdBy = req.user;
 	activity.family = req.user.family;
 
 	if(req.user.child) {
+		console.log('YES');
 		activity.status='pending';
 	}
+	console.log(activity.users);
 	if(verbose) console.log(activity);
 
 	activity.save(function(err) {
 		if (err) {
+			console.log(err);
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
 			updatePoints(activity.users);
+			if(activity.status==='assigned') {
+				sendSMSForActivity(activity);
+			}
 			res.jsonp(activity);
 		}
 	});
 };
+
 
 /**
  * Show the current Activity
@@ -147,15 +190,15 @@ exports.delete = function(req, res) {
 };
 
 /**
- * List of Activities
+ * List of Activities - fetch all for family
  */
 exports.list = function(req, res) {
-	var criteria={};
-	if(req.user.child) {
-		criteria={users: req.user._id};
-	} else {
-		criteria={family: req.user.family};
+	console.log('LIST');
+	if(!req.user.family) {
+		res.jsonp({});
+		return;
 	}
+	var criteria={family: req.user.family};
 	Activity.find(criteria).sort('-created').populate('chore users').exec(function(err, activities) {
 		if (err) {
 			return res.status(400).send({
@@ -167,20 +210,6 @@ exports.list = function(req, res) {
 	});
 };
 
-/**
- * List of Activities
- */
-exports.listMine = function(req, res) {
-	Activity.find({users: req.user }).sort('-created').populate('chore users').exec(function(err, activities) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
-			res.jsonp(activities);
-		}
-	});
-};
 
 /**
  * Activity middleware
@@ -209,4 +238,32 @@ exports.hasAuthorization = function(req, res, next) {
 	} else {
 		return res.status(403).send('User is not authorized');
 	}
+};
+
+exports.migrate = function(req, res, next) {
+	Activity.find().exec(function(err, activities) {
+		for(var i=0; i < activities.length ; i++) {
+			var a = activities[i];
+			if(a.user && a.users[length]===0) {
+				console.log('Updating activity ' + a._id);
+
+				a.users = [ a.user ];
+
+				a.user = undefined;
+				a.save();
+			}
+		}
+	});
+
+	Chore.find().exec(function(err, chores) {
+		for(var i=0; i<chores.length; i++) {
+			var c = chores[i];
+			if(!c.family) {
+				c.family = req.user.family;
+				console.log('Updating Chore ' + c._id);
+				c.save();
+			}
+		}
+	});
+	return res.status(200);
 };

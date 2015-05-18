@@ -76,7 +76,7 @@ exports.signin = function(req, res, next) {
 							res.status(400).send(err);
 						} else {
 							console.log('sending cookie');
-						 	res.cookie('remember_me', token, { path: '/', httpOnly: true, maxAge: 604800000 });
+						 	res.cookie('remember_me', token, { path: '/', httpOnly: true, Expires: 'Thu, 31-Dec-2015 11:59:59 GMT' });
 							res.json(user);
 						}
 					});

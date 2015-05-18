@@ -7,12 +7,42 @@ angular.module('activities').controller('ActivitiesController', ['$scope', '$res
 		var verbose=true;
 		$scope.authentication = Authentication;
 
+		$scope.selectAllChanged = function(elt) {
+			var children=$scope.initData.family.children;
+			var isChecked=document.getElementById('selectAll').checked;
+			for(var i=0 ; i < children.length ; i++ ) {
+				document.getElementById(children[i]._id).checked=isChecked;
+			}
+			console.log(elt);
+		};
+
 		$scope.init = function() {
+			if($location.search().type === 'request') {
+				$scope.type='request';
+			} else {
+				$scope.type='complete';
+			}
+			console.log($scope.type);
 			var FormData = $resource('/acInitForm');
 			$scope.initData = FormData.get();
 			$scope.points=0;
 			$scope.chore='';
-			$scope.users=[];
+
+			if($scope.authentication.user.child) {
+				$scope.users=[$scope.authentication.user._id];
+			} else {
+				$scope.users=[];
+			}
+			console.log($scope.users);
+
+		};
+
+		$scope.minus = function() {
+			$scope.points = $scope.points - 1;
+		};
+
+		$scope.plus = function() {
+			$scope.points = $scope.points + 1;
 		};
 
 
@@ -21,27 +51,56 @@ angular.module('activities').controller('ActivitiesController', ['$scope', '$res
 			console.log(elt);
 		};
 
-		// This is terrible!
-		$scope.userSelect = function(elt) {
-			var id = elt.userCB;
-			if(id.indexOf('-')===0) {
-				id=id.substring(1);
-				var i= $scope.users.indexOf(id);
-				if( i != -1) {
-					$scope.users.splice(i,1);
-				}
-			} else {
-				// add to array
-				$scope.users.push(id);
-			}
-			console.log($scope.users);
-		};
-
 		$scope.pendingFilter = function(a) {
 			if($scope.showPending) {
 				return (a.status==='pending');
 			}
 			return true;
+		};
+
+
+		// FILTERS - should go in own file?
+
+		// Is this activity assigned to me?
+		$scope.myAssigned = function(a) {
+			var userId = $scope.authentication.user._id;
+			if(a.status==='assigned') {
+				for(var i=0;i<a.users.length;i++) {
+					if(a.users[i]._id === userId)
+						return true;
+				}
+			}
+			return false;
+		};
+
+		// Is this activity assigned to me?
+		$scope.myAssigned = function(a) {
+			return a.status==='assigned' && $scope.mine(a);
+		};
+
+		// Is this activity assigned to me?
+		$scope.myPending = function(a) {
+			return a.status==='pending' && $scope.mine(a);
+		};
+
+		// Is this activity assigned to me?
+		$scope.myApproved = function(a) {
+			return a.status==='approved' && $scope.mine(a);
+		};
+
+		$scope.mine = function(a) {
+			var userId = $scope.authentication.user._id;
+			for(var i=0;i<a.users.length;i++) {
+				if(a.users[i]._id === userId)
+					return true;
+			}
+			return false;
+		};
+
+
+		// Is this activity assigned to me?
+		$scope.open = function(a) {
+			return (a.status==='open');
 		};
 
 
@@ -54,14 +113,31 @@ angular.module('activities').controller('ActivitiesController', ['$scope', '$res
 
 		// Create new Activity
 		$scope.create = function() {
+
 			if(this.users.length===0) {
-				$scope.errorNoChild=1;
-				return;
+				// Look at checkboxes to see which users to select
+				var children=$scope.initData.family.children;
+				for(var i=0 ; i < children.length ; i++ ) {
+					var id = children[i]._id;
+					if(document.getElementById(id).checked) {
+						this.users.push(id);
+					}
+				}
+				console.log('USERS:' + this.users);
 			}
 
-			if(this.chore=='') {
-				$scope.errorNoChore=1;
+			if(this.users.length===0) {
+				$scope.errorNoChild=true;
 				return;
+			} else {
+				$scope.errorNoChild=false;
+			}
+
+			if(this.chore==='') {
+				$scope.errorNoChore=true;
+				return;
+			} else {
+				$scope.errorNoChore=false;
 			}
 
 			console.log('USERS');
@@ -73,13 +149,25 @@ angular.module('activities').controller('ActivitiesController', ['$scope', '$res
 				points: this.points,
 				notes: this.notes
 			});
-			// Set users to chosen users, or current user if not parent
-			if($scope.authentication.user.parent) {
-				activity.users = this.users;
-				activity.status = 'approved';
-			} else {
-				activity.users = [$scope.authentication.user._id];
-				activity.status='pending';
+			activity.users = this.users;
+
+			// If it's a "REQUEST", then if only one user chosen, then activity status is Assigned, otherwise it's Open
+			if($scope.type==='request') {
+				if(activity.users.length === 1) {
+					activity.status='assigned';
+				} else {
+					activity.status='open';
+				}
+			}
+
+			// If it's a COMPLETED task, then depending on who's inputting the data, it's either Pending or Approved
+			if($scope.type==='complete') {
+				// Set users to chosen users, or current user if not parent
+				if($scope.authentication.user.parent) {
+					activity.status = 'approved';
+				} else {
+					activity.status='pending';
+				}
 			}
 
 			if(verbose) console.log(activity);
@@ -123,11 +211,26 @@ angular.module('activities').controller('ActivitiesController', ['$scope', '$res
 			$scope.activities = Activities.query();
 		};
 
+		// Mark this activity complete
+		$scope.markComplete = function() {
+			console.log('Complete');
+			if($scope.myAssigned($scope.activity)) {
+				$scope.activity.status='pending';
+				$scope.activity.$update(function(response) {
+					$location.path('/');
+				}, function(errorResponse) {
+					$scope.error = errorResponse.data.message;
+				});
+			}
+		};
+
 		// Find existing Activity
 		$scope.findOne = function() {
 			$scope.activity = Activities.get({
 				activityId: $stateParams.activityId
 			});
 		};
+
+
 	}
 ]);

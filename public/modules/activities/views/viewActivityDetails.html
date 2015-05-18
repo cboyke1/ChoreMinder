@@ -1,0 +1,34 @@
+<strong>{{activity.chore.name}}</strong>
+<strong class="pull-right">
+  <span ng-if="activity.status=='open'">
+    <font color="#000000">{{ activity.status }}</font>
+  </span>
+  <span ng-if="activity.status=='assigned'">
+    <font color="#000000">{{ activity.status }}</font>
+  </span>
+  <span ng-if="activity.status=='pending'">
+    <font color="#FF4400">{{ activity.status }}</font>
+  </span>
+  <span ng-if="activity.status=='approved'">
+    <font color="#00AA00">{{ activity.status }}</font>
+  </span>
+</strong>
+
+<br>
+<em>  <strong>
+      <span ng-repeat="user in activity.users">
+        {{user.displayName}}<span ng-if="!$last">, </span>
+      </span>
+      </strong> on
+      {{ activity.created | date:'M/d @ h:mm a' }}.  {{ activity.points}} points
+</em>
+<span>
+
+<span ng-if="activity.notes">
+  <br>
+  <strong>Notes:</strong>{{activity.notes}}
+  <br>
+</span>
+
+
+</span>

@@ -1,0 +1,50 @@
+<section data-ng-controller="ActivitiesController" data-ng-init="findOne()">
+    <div class="page-header">
+        <h4>Edit Activity</h4>
+    </div>
+
+    <span ng-repeat="user in activity.users">
+      {{user.displayName}}<span ng-if="!$last">, </span>
+    </span>&nbsp;
+
+    {{ activity.chore.name}}, &nbsp;    {{ activity.created | date:"M/d @ h:mm a"}}
+    <div class="col-md-12">
+        <form class="form-horizontal" novalidate>
+            <fieldset>
+
+              <p>
+                <div class="form-group">
+                    <label class="control-label">Points</label>
+                    <div class="controls">
+                        <input type="number" data-ng-model="activity.points">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">Notes</label>
+                    <div class="controls">
+                        <textarea ng-model="activity.notes"></textarea>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="control-label" for="name">Status</label>
+                    <div class="controls">
+                        <input type="radio" data-ng-model="activity.status" id="status" value="pending" >Pending
+                        <input type="radio" data-ng-model="activity.status" id="status" value="approved" >Approved
+                    </div>
+                </div>
+                  <div class="pull-left">
+                      <button name="Update" ng-click="update()" class="btn-success">Update</button>
+                  </div>
+                  <div class="pull-right">
+                      <button name="Delete" ng-click="remove()" class="btn-danger">Delete</button>
+                  </div>
+        <div data-ng-show="error" class="text-danger">
+					<strong data-ng-bind="error"></strong>
+				</div>
+            </fieldset>
+        </form>
+    </div>
+</section>

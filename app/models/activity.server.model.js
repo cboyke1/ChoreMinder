@@ -10,6 +10,11 @@ var mongoose = require('mongoose'),
  * Activity Schema
  */
 var ActivitySchema = new Schema({
+	// for compatibility
+	user: {
+		type: Schema.ObjectId,
+		ref: 'User'
+	},
 	users: [{type: Schema.ObjectId, ref: 'User'}],
 	family: {
 		type: Schema.ObjectId,
@@ -27,7 +32,7 @@ var ActivitySchema = new Schema({
 	},
 	status: {
 		type: String,
-		enum: ['requested','pending','approved','rejected']
+		enum: ['open','assigned','pending','approved','rejected']
 	},
 	created: {
 		type: Date,

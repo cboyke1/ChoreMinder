@@ -9,12 +9,13 @@ module.exports = function(app) {
 		.get(activities.list)
 		.post(activities.create);
 
-	app.route('/activities-mine')
-		.get(activities.listMine);
+		app.route('/migrate')
+			.get(activities.migrate);
+
 
 	app.route('/activities/:activityId')
 		.get(activities.read)
-		.put(users.requiresLogin, activities.hasAuthorization, activities.update)
+		.put(users.requiresLogin, activities.update)
 		.delete(users.requiresLogin, activities.hasAuthorization, activities.delete);
 
 	app.route('/acInitForm')

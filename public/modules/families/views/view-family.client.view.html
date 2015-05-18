@@ -1,20 +1,28 @@
 <section data-ng-controller="FamiliesController" data-ng-init="findOne()">
-	<hr>
+	<span ng-if="authentication.user.parent">	
+	<div class="up-left">
+		<a href="/#!/activities/create?type=request"><img src="/modules/core/img/plus.jpg" border=0 alt="Request"></a>
+	</div>
+
+	<div class="up-right">
+	  <a href="/#!/activities/create"><img src="/modules/core/img/check.jpg" border=0 alt="Chore Done!"></a>
+	</div>
+
+
 	<center>
 		<h4>{{ family.name }}</h4>
 	</center>
 
-		<h4>Children</h4>
+	<p>&nbsp;<p>
 	<div class="list-group">
 		<span class="list-group-item" data-ng-repeat="user in family.children">
 			<span class="pull-left"> {{ user.displayName }}</span>
 		  <span class="pull-right"> {{ user.points }}</span><br>
 		</span>
 	</div>
-
-<center ng-show="authentication.user.parent">
-	<a class="btn btn-primary" href="#!/activities/create">Record an activity</a>&nbsp;&nbsp;
-	<a class="btn btn-primary" href="#!/activities">List Activities</a>
+	<span ng-if="authentication.user.parent">
+	    <span ng-include="'/modules/activities/views/parentListActivities.html'"></span>
+	</span>
 
 </center>
 </section>
