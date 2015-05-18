@@ -1,7 +1,11 @@
-<span ng-if="authentication.user.parent">
-    <span ng-include="'/modules/activities/views/parentListActivities.html'"></span>
-</span>
+<section data-ng-controller="ActivitiesController">
 
-<span ng-if="authentication.user.child">
-    <span ng-include="'/modules/activities/views/childListActivities.html'"></span>
-</span>
+  <span ng-if="authentication.user.parent">
+      <span ng-include="'/modules/activities/views/parentListActivities.html'"></span>
+  </span>
+
+  <span ng-if="authentication.user.child">
+      <span ng-include="'/modules/activities/views/childListActivities.html'"></span>
+  </span>
+
+</section>

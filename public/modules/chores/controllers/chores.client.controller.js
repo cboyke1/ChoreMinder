@@ -25,18 +25,20 @@ angular.module('chores').controller('ChoresController', ['$scope', '$stateParams
 
 		// Remove existing Chore
 		$scope.remove = function(chore) {
-			if ( chore ) {
-				chore.$remove();
+			if(confirm('Are you sure you want to delete this chore?')) {
+				if ( chore ) {
+					chore.$remove();
 
-				for (var i in $scope.chores) {
-					if ($scope.chores [i] === chore) {
-						$scope.chores.splice(i, 1);
+					for (var i in $scope.chores) {
+						if ($scope.chores [i] === chore) {
+							$scope.chores.splice(i, 1);
+						}
 					}
+				} else {
+					$scope.chore.$remove(function() {
+						$location.path('chores');
+					});
 				}
-			} else {
-				$scope.chore.$remove(function() {
-					$location.path('chores');
-				});
 			}
 		};
 

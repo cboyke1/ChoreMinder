@@ -183,14 +183,17 @@ angular.module('activities').controller('ActivitiesController', ['$scope', '$res
 
 		// Remove existing Activity
 		$scope.remove = function(activity) {
+
 			console.log('REMOVE');
-			if ( activity ) {
-				activity.$remove();
-				$location.path('activities');
-			} else {
-				$scope.activity.$remove(function() {
+			if(confirm('Are you sure you want to delete this activity?')) {
+				if ( activity ) {
+					activity.$remove();
 					$location.path('activities');
-				});
+				} else {
+					$scope.activity.$remove(function() {
+						$location.path('activities');
+					});
+				}
 			}
 		};
 

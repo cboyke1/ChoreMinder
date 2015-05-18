@@ -60,7 +60,7 @@ function updatePoints(users) {
 exports.initForm = function(req, res) {
 	// Get all chores (for this family)
 
-	Chore.find({family: req.user.family}).exec(function(err, chores) {
+	Chore.find({family: req.user.family}).sort('order').exec(function(err, chores) {
 		if (err) {
 			return sendError(err,res);
 		} else {
