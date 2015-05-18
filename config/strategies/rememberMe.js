@@ -33,6 +33,8 @@ module.exports = function() {
 						console.log('user not found');
 						return done(null, false);
 					}
+					console.log('Valid User');
+					console.log(user);
 	        return done(null, user);
 	      });
     	});

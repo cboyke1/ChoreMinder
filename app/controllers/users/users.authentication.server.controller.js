@@ -67,17 +67,18 @@ exports.signin = function(req, res, next) {
 				if (err) {
 					res.status(400).send(err);
 				} else {
-					console.log('issue remember me');
+					console.log('issue remember me cookie');
 					//
 					//if (!req.body.remember_me) { return done(null, user); }
 
 					Token.issueToken(user, function(err, token) {
 						if (err) {
+							console.log(err);
 							res.status(400).send(err);
 						} else {
-							console.log('sending cookie');
-						 	res.cookie('remember_me', token, { path: '/', httpOnly: true, Expires: 'Thu, 31-Dec-2015 11:59:59 GMT' });
-							res.json(user);
+							console.log('sending cookie: ');
+						 	res.cookie('remember_me', token, { maxAge: 1000*3600*24*365 });
+							res.jsonp(user);
 						}
 					});
 				}

@@ -24,7 +24,7 @@ function randomString(len) {
 }
 
 function saveRememberMeToken(token, uid, fn) {
-  console.log('saving token' + token);
+  console.log('saving token: ' + token);
   var item = new Token({'token': token,
                          user: uid});
 
