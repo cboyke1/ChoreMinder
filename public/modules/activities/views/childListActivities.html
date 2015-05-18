@@ -17,9 +17,9 @@
 
     <!-- Open Activities -->
 
-    <div class="list-group" ng-if="(activities|filter:open).length">
+    <div class="list-group" ng-if="(activities|filter:myOpen).length">
       <h4>Open (Unassigned) Chores</h4>
-        <a class="list-group-item" ng-repeat="activity in activities|filter:open|limitTo:8" href="#!/activities/{{activity._id}}/edit">
+        <a class="list-group-item" ng-repeat="activity in activities|filter:myOpen|limitTo:8" href="#!/activities/{{activity._id}}/edit">
           <span ng-include="'/modules/activities/views/viewActivityDetails.html'"></span>
         </a>
     </div>

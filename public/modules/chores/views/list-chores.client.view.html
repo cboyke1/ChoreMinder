@@ -4,7 +4,11 @@
     </div>
     <div class="list-group">
         <a data-ng-repeat="chore in chores" data-ng-href="#!/chores/{{chore._id}}" class="list-group-item">
-          {{ chore.name}}:   &nbsp;&nbsp;&nbsp;  {{ chore.points}} points
+          {{ chore.name}}:   &nbsp;
+          {{ chore.points}}
+          <span ng-if="chore.points==1">pt</span>
+          <span ng-if="chore.points!=1">pts</span>
+
           <span class="pull-right"> sort: {{ chore.order}}</span>
         </a>
     </div>

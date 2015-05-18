@@ -6,6 +6,7 @@ node_modules/
 data/
 auth/
 public/lib
+public/dist
 app/tests/coverage/
 .bower-*/
 .idea/

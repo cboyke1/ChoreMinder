@@ -98,9 +98,9 @@ angular.module('activities').controller('ActivitiesController', ['$scope', '$res
 		};
 
 
-		// Is this activity assigned to me?
-		$scope.open = function(a) {
-			return (a.status==='open');
+		// Is this activity open, and I'm one of the assignees?
+		$scope.myOpen = function(a) {
+			return a.status==='open' && $scope.mine(a);
 		};
 
 
@@ -188,10 +188,10 @@ angular.module('activities').controller('ActivitiesController', ['$scope', '$res
 			if(confirm('Are you sure you want to delete this activity?')) {
 				if ( activity ) {
 					activity.$remove();
-					$location.path('activities');
+					$location.path('/');
 				} else {
 					$scope.activity.$remove(function() {
-						$location.path('activities');
+						$location.path('/');
 					});
 				}
 			}
@@ -211,6 +211,7 @@ angular.module('activities').controller('ActivitiesController', ['$scope', '$res
 
 		// Find a list of Activities
 		$scope.find = function() {
+			console.log('find');
 			$scope.activities = Activities.query();
 		};
 

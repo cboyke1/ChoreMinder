@@ -1,13 +1,7 @@
 <section data-ng-controller="ActivitiesController" data-ng-init="init()">
-  <div ng-show="authentication.user.parent">
-
-  </div>
-
     <center>
-
         <h4 ng-if="type=='request'">Chore Request</h4>
         <h4 ng-if="type=='complete'">Chore Completed</h4>
-
     </center>
     <div class="col-md-12">
         <form class="form-horizontal" id="createForm" data-ng-submit="create()" novalidate>
