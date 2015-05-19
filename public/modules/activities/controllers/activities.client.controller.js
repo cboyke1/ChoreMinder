@@ -26,29 +26,33 @@ angular.module('activities').controller('ActivitiesController', ['$scope', '$tim
 
 		};
 
-		$scope.childModel = function() {
-			console.log('child model');
-		};
 
 		$scope.initChildCheckboxes = function() {
 			console.log('ICC');
 			$timeout(function() {
 				console.log('init child checkboxes');
-				// Initialize the child checkboxes based on activity data
-				if(!$scope.activity) {
-					console.log('activity not ready');
-					return;
-				}
-				console.log($scope.activity);
-				var users=$scope.activity.users;
-				if(users === undefined || users.length===0) {
-					console.log('no users selected in activity');
-					return;
-				}
-				for(var i=0;i<users.length;i++) {
-					var id=users[i]._id;
-					console.log(id);
-					document.getElementById(id).checked=true;
+
+				if($scope.type === 'complete') {
+					// Child is requesting credit - make this child the only selected user
+					document.getElementById($scope.authentication.user._id).checked=true;
+				} else {
+
+					// Initialize the child checkboxes based on activity data
+					if(!$scope.activity) {
+						console.log('activity not ready');
+						return;
+					}
+					console.log($scope.activity);
+					var users=$scope.activity.users;
+					if(users === undefined || users.length===0) {
+						console.log('no users selected in activity');
+						return;
+					}
+					for(var i=0;i<users.length;i++) {
+						var id=users[i]._id;
+						console.log(id);
+						document.getElementById(id).checked=true;
+					}
 				}
 			},250);
 		};
@@ -56,6 +60,7 @@ angular.module('activities').controller('ActivitiesController', ['$scope', '$tim
 
 		// Set up the initial data for a CREATE
 		$scope.initCreate = function() {
+			console.log('INIT CREATE');
 			if($location.search().type === 'request') {
 				$scope.type='request';
 			} else {
