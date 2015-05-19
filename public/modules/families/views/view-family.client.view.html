@@ -1,15 +1,15 @@
 <section data-ng-controller="FamiliesController" data-ng-init="findOne()">
 	<span ng-if="authentication.user.parent">
-	<div id="request" class="up-left">
+	<div id="pt-request" class="up-left">
 		<a href="/#!/activities/create?type=request"><img src="/modules/core/img/plus.jpg" border=0 alt="Request"></a>
 	</div>
 
-	<div id="complete" class="up-right">
+	<div id="pt-complete" class="up-right">
 	  <a href="/#!/activities/create"><img src="/modules/core/img/check.jpg" border=0 alt="Chore Done!"></a>
 	</div>
 
 
-	<div id="family-name" class="page-header">
+	<div id="pt-family-name" class="page-header">
 		<h4>{{ family.name }}</h4>
 	</div>
 
