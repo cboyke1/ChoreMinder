@@ -1,20 +1,16 @@
-<section data-ng-controller="ActivitiesController" data-ng-init="init()">
-    <center>
+<section data-ng-controller="ActivitiesController" data-ng-init="initCreate()">
+    <div class="page-header">
         <h4 ng-if="type=='request'">Chore Request</h4>
         <h4 ng-if="type=='complete'">Chore Completed</h4>
-    </center>
+    </div>
     <div class="col-md-12">
         <form class="form-horizontal" id="createForm" data-ng-submit="create()" novalidate>
             <fieldset>
                 <div class="form-group">
                   <div ng-if="authentication.user.parent">
-                    <label class="control-label" for="child">Child</label><br>
-                    <span ng-repeat="u in initData.family.children">
-                      <input type="checkbox" id="{{u._id}}" >&nbsp;{{u.displayName}}&nbsp;&nbsp;
-                    </span>
-                    &nbsp;&nbsp;<input type="checkbox" id="selectAll" ng-model="selectAll" ng-change="selectAllChanged(this)"> Select All
-                    <br>
-                    <span ng-if="errorNoChild"><font color="red">&nbsp;Please select at least one child!</font></span>
+                      <span>
+                          <span ng-include="'/modules/activities/views/acEditChildren.html'"></span>
+                      </span>
                   </div>
                   <br>&nbsp;<br>
                   <label class="control-label" for="chore">Chore</label>

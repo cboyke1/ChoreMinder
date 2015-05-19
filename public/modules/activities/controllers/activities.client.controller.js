@@ -1,11 +1,12 @@
 'use strict';
 
 // Activities controller
-angular.module('activities').controller('ActivitiesController', ['$scope', '$resource', '$stateParams', '$location', 'Authentication', 'Activities',
-	function($scope, $resource, $stateParams, $location, Authentication, Activities) {
+angular.module('activities').controller('ActivitiesController', ['$scope', '$timeout', '$resource', '$stateParams', '$location', 'Authentication', 'Activities',
+	function($scope, $timeout, $resource, $stateParams, $location, Authentication, Activities) {
 
 		var verbose=true;
 		$scope.authentication = Authentication;
+
 
 		$scope.selectAllChanged = function(elt) {
 			var children=$scope.initData.family.children;
@@ -16,15 +17,53 @@ angular.module('activities').controller('ActivitiesController', ['$scope', '$res
 			console.log(elt);
 		};
 
-		$scope.init = function() {
+		// Set up the initial data for an EDIT
+		$scope.initEdit = function() {
+			if(verbose) console.log('INIT EDIT');
+			var InitResource = $resource('/acInitForm');
+			$scope.findOne();
+			$scope.initData = InitResource.get();
+
+		};
+
+		$scope.childModel = function() {
+			console.log('child model');
+		};
+
+		$scope.initChildCheckboxes = function() {
+			console.log('ICC');
+			$timeout(function() {
+				console.log('init child checkboxes');
+				// Initialize the child checkboxes based on activity data
+				if(!$scope.activity) {
+					console.log('activity not ready');
+					return;
+				}
+				console.log($scope.activity);
+				var users=$scope.activity.users;
+				if(users === undefined || users.length===0) {
+					console.log('no users selected in activity');
+					return;
+				}
+				for(var i=0;i<users.length;i++) {
+					var id=users[i]._id;
+					console.log(id);
+					document.getElementById(id).checked=true;
+				}
+			},250);
+		};
+
+
+		// Set up the initial data for a CREATE
+		$scope.initCreate = function() {
 			if($location.search().type === 'request') {
 				$scope.type='request';
 			} else {
 				$scope.type='complete';
 			}
 			console.log($scope.type);
-			var FormData = $resource('/acInitForm');
-			$scope.initData = FormData.get();
+			var InitResource = $resource('/acInitForm');
+			$scope.initData = InitResource.get();
 			$scope.points=0;
 			$scope.chore='';
 
@@ -110,28 +149,36 @@ angular.module('activities').controller('ActivitiesController', ['$scope', '$res
 			console.log($scope.chore);
 		};
 
+		// TRUE if valid user selection
+		$scope.saveUsers = function() {
+			$scope.users=[];
+			// Look at checkboxes to see which users to select
+			var children=$scope.initData.family.children;
+			for(var i=0 ; i < children.length ; i++ ) {
+				var id = children[i]._id;
+				if(document.getElementById(id).checked) {
+					this.users.push(id);
+				}
+			}
+			if(this.users.length===0) {
+				$scope.errorNoChild=true;
+				return false;
+			} else {
+				$scope.errorNoChild=false;
+			}
+			console.log('USERS:' + this.users);
+			return true;
+		};
+
 
 		// Create new Activity
 		$scope.create = function() {
 
-			if(this.users.length===0) {
-				// Look at checkboxes to see which users to select
-				var children=$scope.initData.family.children;
-				for(var i=0 ; i < children.length ; i++ ) {
-					var id = children[i]._id;
-					if(document.getElementById(id).checked) {
-						this.users.push(id);
-					}
-				}
-				console.log('USERS:' + this.users);
+			// Store the "users" checkboxes in the model.
+			if(!$scope.saveUsers()) {
+				return;
 			}
 
-			if(this.users.length===0) {
-				$scope.errorNoChild=true;
-				return;
-			} else {
-				$scope.errorNoChild=false;
-			}
 
 			if(this.chore==='') {
 				$scope.errorNoChore=true;
@@ -139,9 +186,6 @@ angular.module('activities').controller('ActivitiesController', ['$scope', '$res
 			} else {
 				$scope.errorNoChore=false;
 			}
-
-			console.log('USERS');
-			console.log(this.users);
 
 			// Create new Activity object
 			var activity = new Activities ({
@@ -183,7 +227,6 @@ angular.module('activities').controller('ActivitiesController', ['$scope', '$res
 
 		// Remove existing Activity
 		$scope.remove = function(activity) {
-
 			console.log('REMOVE');
 			if(confirm('Are you sure you want to delete this activity?')) {
 				if ( activity ) {
@@ -202,7 +245,15 @@ angular.module('activities').controller('ActivitiesController', ['$scope', '$res
 		// Update existing Activity
 		$scope.update = function() {
 			console.log('UPDATE');
+			if(!$scope.saveUsers()) {
+				return;
+			}
 			var activity = $scope.activity;
+			activity.users=$scope.users;
+
+			if($scope.authentication.user.child) {
+				activity.status='pending';
+			}
 
 			activity.$update(function() {
 				$location.path('activities');
@@ -235,8 +286,7 @@ angular.module('activities').controller('ActivitiesController', ['$scope', '$res
 			$scope.activity = Activities.get({
 				activityId: $stateParams.activityId
 			});
+			console.log('F1');
 		};
-
-
 	}
 ]);

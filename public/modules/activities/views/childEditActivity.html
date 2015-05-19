@@ -2,9 +2,38 @@
       <h4>Complete Activity</h4>
 </div>
 
-<span ng-include="'/modules/activities/views/viewActivityDetails.html'"></span>
-<br>
-<p>
+<strong>{{activity.chore.name}}</strong>
+<strong class="pull-right">
+  <span ng-if="activity.status=='open'">
+    <font color="#000000">{{ activity.status }}</font>
+  </span>
+  <span ng-if="activity.status=='assigned'">
+    <font color="#000000">{{ activity.status }}</font>
+  </span>
+  <span ng-if="activity.status=='pending'">
+    <font color="#FF4400">{{ activity.status }}</font>
+  </span>
+  <span ng-if="activity.status=='approved'">
+    <font color="#00AA00">{{ activity.status }}</font>
+  </span>
+</strong>
+
+<p>&nbsp;<p>
+
+  <span>
+      <span ng-include="'/modules/activities/views/acEditChildren.html'"></span>
+  </span>
+
+<p>&nbsp;<p>
+
+  <div class="form-group">
+      <label class="control-label">Notes</label>
+      <div class="controls">
+          <textarea ng-model="activity.notes"></textarea>
+      </div>
+  </div>
+  <p>&nbsp;<p>
+
 <center ng-if="activity.status =='assigned' || activity.status==='open'">
-    <button name="markComplete" ng-click="markComplete()" class="btn-success">Task Completed</button>
+    <button name="markComplete" ng-click="update()" class="btn-success">Task Completed</button>
 </center>

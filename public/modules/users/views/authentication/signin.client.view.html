@@ -1,5 +1,7 @@
 <section class="row" data-ng-controller="AuthenticationController">
-	<h3 class="col-md-12 text-center">Please Log In</h3>
+	<div id="head" class="page-header"><h4>Please Log In</h4>
+	</div>
+
 	<div class="col-xs-offset-2 col-xs-8 col-md-offset-5 col-md-2">
 		<form data-ng-submit="signin()" class="signin form-horizontal" autocomplete="off">
 			<fieldset>
@@ -17,7 +19,7 @@
 				</div>
 
 				<div class="text-center form-group">
-					<button type="submit" class="btn btn-primary">Sign in</button>&nbsp; or&nbsp;
+					<button id="signin" type="submit" class="btn btn-primary">Sign in</button>&nbsp; or&nbsp;
 					<a href="/#!/signup">Sign up</a>
 				</div>
 				<div class="forgot-password">
