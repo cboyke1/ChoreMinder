@@ -1,4 +1,4 @@
-<section data-ng-controller="ActivitiesController" data-ng-init="initCreate()">
+<section data-ng-controller="ActivitiesController" data-ng-init="initCreate()" ng-cloak>
     <div class="page-header">
         <h4 ng-if="type=='request'">Chore Request</h4>
         <h4 ng-if="type=='complete'">Chore Completed</h4>
@@ -37,8 +37,7 @@
 
                 </div>
                 <div class="form-group">
-                  <center>
-                    <input type="submit" value="OK" class="btn btn-default">
+                  <center><button class="btn-success" ng-click="create()"><h4>OK</h4></button>
                   </center>
                 </div>
   				<div data-ng-show="error" class="text-danger">

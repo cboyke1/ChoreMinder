@@ -178,7 +178,7 @@ angular.module('activities').controller('ActivitiesController', ['$scope', '$tim
 
 		// Create new Activity
 		$scope.create = function() {
-
+			console.log('CREATE');
 			// Store the "users" checkboxes in the model.
 			if(!$scope.saveUsers()) {
 				return;
