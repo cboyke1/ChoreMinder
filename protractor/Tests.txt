@@ -1,3 +1,16 @@
 1 - log in as parent
 2 - add / request chore
-3 - 
+      - choose 1 child
+3 - log out
+
+4 - log in as child
+5 - look at assigned chore
+6 - mark it complete
+
+7 - create / complete a new chore
+8 - submit it
+9 - log out
+
+10 - log in as parent
+11 - look at pending chores
+12 - mark approved

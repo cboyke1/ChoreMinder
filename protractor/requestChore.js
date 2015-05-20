@@ -24,9 +24,13 @@ describe('Request Chore', function() {
   describe('step 4', function() {
     it('click to display new chore page', function() {
       element(by.id('pt-request-chore')).click();
-      });
     });
   });
-
+  describe('step 5', function() {
+    it('create and save new chore', function() {
+      var childList = element.all(by.repeater('u in initData.family.children'));
+      element(by.id('pt-request-chore')).click();
+    });
+  });
 
 });
