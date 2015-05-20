@@ -1,10 +1,12 @@
 <label class="control-label" for="child">Child</label><br>
 
 <span ng-repeat="u in initData.family.children">
-  <input type="checkbox" id="{{u._id}}">&nbsp;{{u.displayName}}&nbsp;&nbsp;
+  <input type="checkbox" id="{{u._id}}">
+  <label for="{{u._id}}" class="radio-item">&nbsp;{{u.displayName}}&nbsp;&nbsp;</label>
 </span>
 
-&nbsp;&nbsp;<input type="checkbox" id="selectAll" ng-model="selectAll" ng-change="selectAllChanged(this)"> Select All
+&nbsp;&nbsp;<input type="checkbox" id="selectAll" ng-model="selectAll" ng-change="selectAllChanged(this)">
+<label for="selectAll" class="radio-item">Select All</label>
 <br>
 <span ng-if="errorNoChild"><font color="red">&nbsp;Please select at least one child!</font></span>
 <span my-directive></span>

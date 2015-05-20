@@ -15,7 +15,8 @@
                   <label class="control-label" for="chore">Chore</label>
                   <span ng-if="errorNoChore"><font color="red">Please select a Chore!</font></span>
                   <div ng-repeat="c in initData.chores">
-                    <input type="radio" ng-model="chore" name="chore" ng-click="setPoints(this)" value="{{ c._id}}">{{ c.name }}
+                    <input id="{{$index}}" type="radio" ng-model="chore" name="chore" ng-click="setPoints(this)" value="{{c._id}}">
+                    <label for="{{$index}}" class="radio-item">{{ c.name }}</label>
                   </div>
 
                 <div ng-if="authentication.user.parent">
