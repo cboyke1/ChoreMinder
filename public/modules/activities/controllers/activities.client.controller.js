@@ -1,7 +1,8 @@
 'use strict';
 
 // Activities controller
-angular.module('activities').controller('ActivitiesController', ['$scope', '$timeout', '$resource', '$stateParams', '$location', 'Authentication', 'Activities',
+angular.module('activities').controller('ActivitiesController',
+  ['$scope', '$timeout', '$resource', '$stateParams', '$location', 'Authentication', 'Activities',
 	function($scope, $timeout, $resource, $stateParams, $location, Authentication, Activities) {
 
 		var verbose=true;
@@ -32,7 +33,7 @@ angular.module('activities').controller('ActivitiesController', ['$scope', '$tim
 			$timeout(function() {
 				console.log('init child checkboxes');
 
-				if($scope.type === 'complete') {
+				if($scope.type === 'complete' && $scope.authentication.child) {
 					// Child is requesting credit - make this child the only selected user
 					document.getElementById($scope.authentication.user._id).checked=true;
 				} else {
@@ -69,7 +70,7 @@ angular.module('activities').controller('ActivitiesController', ['$scope', '$tim
 			console.log($scope.type);
 			var InitResource = $resource('/acInitForm');
 			$scope.initData = InitResource.get();
-			$scope.points=0;
+			$scope.activity = new Activities();
 			$scope.chore='';
 
 			if($scope.authentication.user.child) {
@@ -81,12 +82,11 @@ angular.module('activities').controller('ActivitiesController', ['$scope', '$tim
 
 		};
 
-		$scope.minus = function() {
-			$scope.points = $scope.points - 1;
-		};
-
-		$scope.plus = function() {
-			$scope.points = $scope.points + 1;
+		$scope.incrementPoints = function(amt) {
+			if(isNaN($scope.activity.points))
+				$scope.activity.points=amt;
+			else
+				$scope.activity.points = Number($scope.activity.points) + amt;
 		};
 
 
@@ -150,8 +150,7 @@ angular.module('activities').controller('ActivitiesController', ['$scope', '$tim
 
 		$scope.setPoints = function(elt) {
 			$scope.chore=elt.c._id;
-			$scope.points=elt.c.points;
-			console.log($scope.chore);
+			$scope.activity.points=elt.c.points;
 		};
 
 		// TRUE if valid user selection
@@ -167,6 +166,7 @@ angular.module('activities').controller('ActivitiesController', ['$scope', '$tim
 			}
 			if(this.users.length===0) {
 				$scope.errorNoChild=true;
+				window.scrollTo(0, 0);
 				return false;
 			} else {
 				$scope.errorNoChild=false;
@@ -177,6 +177,7 @@ angular.module('activities').controller('ActivitiesController', ['$scope', '$tim
 
 
 		// Create new Activity
+		//*****************************************************
 		$scope.create = function() {
 			console.log('CREATE');
 			// Store the "users" checkboxes in the model.
@@ -192,20 +193,17 @@ angular.module('activities').controller('ActivitiesController', ['$scope', '$tim
 				$scope.errorNoChore=false;
 			}
 
-			// Create new Activity object
-			var activity = new Activities ({
-				chore: this.chore,
-				points: this.points,
-				notes: this.notes
-			});
-			activity.users = this.users;
+			$scope.activity.chore = this.chore;
+			$scope.activity.users = this.users;
+			$scope.activity.notes = this.notes;
+
 
 			// If it's a "REQUEST", then if only one user chosen, then activity status is Assigned, otherwise it's Open
 			if($scope.type==='request') {
-				if(activity.users.length === 1) {
-					activity.status='assigned';
+				if($scope.activity.users.length === 1) {
+					$scope.activity.status='assigned';
 				} else {
-					activity.status='open';
+					$scope.activity.status='open';
 				}
 			}
 
@@ -213,16 +211,16 @@ angular.module('activities').controller('ActivitiesController', ['$scope', '$tim
 			if($scope.type==='complete') {
 				// Set users to chosen users, or current user if not parent
 				if($scope.authentication.user.parent) {
-					activity.status = 'approved';
+					$scope.activity.status = 'approved';
 				} else {
-					activity.status='pending';
+					$scope.activity.status='pending';
 				}
 			}
 
-			if(verbose) console.log(activity);
+			if(verbose) console.log($scope.activity);
 
 			// Redirect after save
-			activity.$save(function(response) {
+			$scope.activity.$save(function(response) {
 				$location.path('/');
 
 			}, function(errorResponse) {

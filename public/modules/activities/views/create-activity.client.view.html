@@ -1,41 +1,37 @@
-<section data-ng-controller="ActivitiesController" data-ng-init="initCreate()" ng-cloak>
+<section data-ng-controller="ActivitiesController" data-ng-init="initCreate()" class="ng-cloak">
     <div class="page-header">
         <h4 ng-if="type=='request'">Chore Request</h4>
         <h4 ng-if="type=='complete'">Chore Completed</h4>
     </div>
     <div class="col-md-12">
-        <form class="form-horizontal" id="createForm" data-ng-submit="create()" novalidate>
+        <form class="form-horizontal" novalidate>
             <fieldset>
-                <div class="form-group">
-                  <span>
-                      <span ng-include="'/modules/activities/views/acEditChildren.html'"></span>
-                  </span>
 
-                  <br>&nbsp;<br>
+                <span>
+                    <span ng-include="'/modules/activities/views/acEditChildren.html'"></span>
+                </span>
+
+
+                <div class="form-group">
+
                   <label class="control-label" for="chore">Chore</label>
                   <span ng-if="errorNoChore"><font color="red">Please select a Chore!</font></span>
                   <div ng-repeat="c in initData.chores">
                     <input id="{{$index}}" type="radio" ng-model="chore" name="chore" ng-click="setPoints(this)" value="{{c._id}}">
                     <label for="{{$index}}" class="radio-item">{{ c.name }}</label>
                   </div>
-
-                <div ng-if="authentication.user.parent">
-                  <br>&nbsp;<br>
-                  <label class="control-label" for="points" >Points</label><br>
-                  <div>
-                    <a ng-click="minus()"><img src="/modules/core/img/minus-small.png"></a>
-                    <input class="input-sm" type="number" class="form-control" ng-model="points" required>
-                    <a ng-click="plus()"><img src="/modules/core/img/plus-small.png"></a>
-
-                  </div>
-
                 </div>
 
+                <span ng-include="'/modules/activities/views/acEditPoints.html'"></span>
+
+
+                <div class="form-group">
                   <label class="control-label" for="notes">Notes</label>
                   <br>
                   <textarea ng-model="notes" cols="30"></textarea>
-
                 </div>
+
+
                 <div class="form-group">
                   <center><button class="btn-success" ng-click="create()"><h4>OK</h4></button>
                   </center>

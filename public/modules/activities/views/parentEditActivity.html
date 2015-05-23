@@ -14,44 +14,38 @@
 
     <div class="col-md-12">
         <form class="form-horizontal" novalidate>
-            <fieldset>
-
-              <p>
-                <div class="form-group">
-                    <label class="control-label">Points</label>
-                    <div class="controls">
-                        <input type="number" data-ng-model="activity.points">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="control-label">Notes</label>
-                    <div class="controls">
-                        <textarea ng-model="activity.notes"></textarea>
-                    </div>
-                </div>
 
 
-                <div class="form-group">
-                    <label class="control-label" for="name">Status</label>
-                    <div>
-                      <input type="radio" data-ng-model="activity.status" id="stat-open" value="open" >
-                      <label class="radio-item" for="stat-open">Open</label><br>
-                      <input type="radio" data-ng-model="activity.status" id="stat-assigned" value="assigned" >
-                      <label class="radio-item" for="stat-assigned">Assigned</label><br>
-                      <input type="radio" data-ng-model="activity.status" id="stat-pending" value="pending" >
-                      <label class="radio-item" for="stat-pending">Pending</label><br>
-                      <input type="radio" data-ng-model="activity.status" id="stat-approved" value="approved" >
-                      <label class="radio-item" for="stat-approved">Approved</label><br>
-                    </div>
-                </div>
-                <p>&nbsp;
-                  <div class="pull-left">
-                      <button name="Update" ng-click="update()" class="btn-success"><h5>Update</h5></button>
-                  </div>
-                  <div class="pull-right">
-                      <button name="Delete" ng-click="remove()" class="btn-danger"><h5>Delete</h5></button>
-                  </div>
+          <span ng-include="'/modules/activities/views/acEditPoints.html'"></span>
+
+          <div class="form-group">
+              <label class="control-label">Notes</label>
+              <div class="controls">
+                  <textarea ng-model="activity.notes"></textarea>
+              </div>
+          </div>
+
+
+          <div class="form-group">
+              <label class="control-label" for="name">Status</label>
+              <div>
+                <input type="radio" data-ng-model="activity.status" id="stat-open" value="open" >
+                <label class="radio-item" for="stat-open">Open</label><br>
+                <input type="radio" data-ng-model="activity.status" id="stat-assigned" value="assigned" >
+                <label class="radio-item" for="stat-assigned">Assigned</label><br>
+                <input type="radio" data-ng-model="activity.status" id="stat-pending" value="pending" >
+                <label class="radio-item" for="stat-pending">Pending</label><br>
+                <input type="radio" data-ng-model="activity.status" id="stat-approved" value="approved" >
+                <label class="radio-item" for="stat-approved">Approved</label><br>
+              </div>
+          </div>
+          <p>&nbsp;
+            <div class="pull-left">
+                <button name="Update" ng-click="update()" class="btn-success"><h5>Update</h5></button>
+            </div>
+            <div class="pull-right">
+                <button name="Delete" ng-click="remove()" class="btn-danger"><h5>Delete</h5></button>
+            </div>
         <div data-ng-show="error" class="text-danger">
 					<strong data-ng-bind="error"></strong>
 				</div>

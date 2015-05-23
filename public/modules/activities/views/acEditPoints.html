@@ -1,0 +1,10 @@
+<div ng-if="authentication.user.parent">
+  <div class="form-group">
+    <label class="control-lafor="points" >Points</label>
+    <div>
+      <button class="btn" ng-click="incrementPoints(-1)"><img src="/modules/core/img/minus-small.png"></button>
+      <input class="input-sm" type="number" ng-model="activity.points" required>
+      <button class="btn" ng-click="incrementPoints(1)"><img src="/modules/core/img/plus-small.png"></button>
+    </div>
+  </div>
+</div>
