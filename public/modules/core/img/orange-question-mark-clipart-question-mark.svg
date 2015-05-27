@@ -1,0 +1,47 @@
+<?xml version="1.0"?><svg width="500" height="500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+ <title>Help Orb Button</title>
+ <defs>
+  <linearGradient id="linearGradient3954">
+   <stop stop-color="#ffffff" id="stop3956" offset="0"/>
+   <stop stop-color="#ffffff" stop-opacity="0" id="stop3958" offset="1"/>
+  </linearGradient>
+  <linearGradient id="linearGradient3938">
+   <stop stop-color="#ffffff" id="stop3940" offset="0"/>
+   <stop stop-color="#999999" stop-opacity="0" id="stop3942" offset="1"/>
+  </linearGradient>
+  <linearGradient id="linearGradient3877">
+   <stop stop-color="#0066ff" id="stop3879" offset="0"/>
+   <stop stop-color="#214478" id="stop3881" offset="1"/>
+  </linearGradient>
+  <linearGradient id="linearGradient3833">
+   <stop stop-color="#808080" id="stop3835" offset="0"/>
+   <stop stop-color="#93a7ac" offset="0.317662" id="stop3853"/>
+   <stop stop-color="#ffffff" id="stop3855" offset="0.507448"/>
+   <stop stop-color="#999999" offset="0.759592" id="stop3843"/>
+   <stop stop-color="#cccccc" id="stop3837" offset="1"/>
+  </linearGradient>
+  <linearGradient id="linearGradient3823">
+   <stop stop-color="#ffffff" id="stop3825" offset="0"/>
+   <stop stop-color="#87aade" id="stop3827" offset="1"/>
+  </linearGradient>
+  <radialGradient gradientUnits="userSpaceOnUse" gradientTransform="matrix(1.6835276,0.02218113,-0.02241968,1.7005288,-994.10457,-578.29185)" r="131.03564" fy="801.96179" fx="749.98822" cy="801.96179" cx="749.98822" id="radialGradient3829" xlink:href="#linearGradient3823"/>
+  <linearGradient y2="-13.830689" x2="-16987.011207" y1="36.311142" x1="-160764.974804" id="linearGradient3839" xlink:href="#linearGradient3833"/>
+  <radialGradient gradientUnits="userSpaceOnUse" gradientTransform="matrix(0.981971,-5.7401208e-6,5.7080144e-6,0.97647849,-486.48283,18.877038)" r="240" fy="802.36218" fx="750" cy="802.36218" cx="750" id="radialGradient3883" xlink:href="#linearGradient3877"/>
+  <radialGradient gradientUnits="userSpaceOnUse" gradientTransform="matrix(-2.6062703,-0.040027,0.02742827,-0.85438294,921.3177,196.09319)" r="105.24194" fy="75.115677" fx="256.04773" cy="75.115677" cx="256.04773" id="radialGradient3946" xlink:href="#linearGradient3938"/>
+  <radialGradient gradientTransform="matrix(-3.1568234,0,0,-1.951177,1065.5148,93.420931)" gradientUnits="userSpaceOnUse" r="240" fy="61.007351" fx="256.3291" cy="61.007351" cx="256.3291" id="radialGradient3960" xlink:href="#linearGradient3954"/>
+  <radialGradient r="240" fy="61.007351" fx="256.3291" cy="61.007351" cx="256.3291" gradientTransform="matrix(-2.1703161,0,0,-0.8792098,810.66642,48.396324)" gradientUnits="userSpaceOnUse" id="radialGradient4004" xlink:href="#linearGradient3954"/>
+  <radialGradient r="240" fy="61.007351" fx="256.3291" cy="61.007351" cx="256.3291" gradientTransform="matrix(-2.1703161,0,0,-0.8792098,810.66642,48.396324)" gradientUnits="userSpaceOnUse" id="radialGradient4006" xlink:href="#linearGradient3954"/>
+  <radialGradient r="240" fy="61.007351" fx="256.3291" cy="61.007351" cx="256.3291" gradientTransform="matrix(-2.1703161,0,0,-0.8792098,810.66642,48.396324)" gradientUnits="userSpaceOnUse" id="radialGradient4045" xlink:href="#linearGradient3954"/>
+ </defs>
+ <metadata id="metadata7">image/svg+xmlHelp Orb Button2011-01-15John Widmark CatadaJohn Widmark CatadaJohn Widmark Catadahelphelp buttonhelp orbglossy help buttonglossy help orbA glossy help orb button.</metadata>
+ <g>
+  <title>Layer 1</title>
+  <g externalResourcesRequired="false" id="layer1">
+   <path fill="#ff7f00" stroke="#435f9f" stroke-width="0.2" stroke-miterlimit="4" id="path3045" d="m290.263,389.580994c0,18.391998 -17.549011,33.302002 -39.197006,33.302002c-21.647995,0 -39.196991,-14.910004 -39.196991,-33.302002c0,-18.391998 17.548996,-33.302002 39.196991,-33.302002c21.574997,0 39.094009,14.813019 39.195999,33.144012m-50.401993,-312.778801c-58.858994,0.605095 -113.137001,42.048798 -117.896004,92.138802c-1.308998,6.18399 -1.976997,12.386993 -2.711998,18.65799c33.858994,21.356003 33.858994,21.356003 73.100006,7.359009c0.766998,-23.537003 11.589996,-50.570007 38.845993,-60.583008c31.915009,-11.687996 75.871002,8.708008 76.863007,39.509003c-0.304993,21.272003 -22.35199,35.048004 -39.739014,47.453003c-29.330994,20.987 -54.320984,50.487991 -53.605988,84.491013c-0.612,10.366974 0.016998,20.745972 0.384003,31.110992c36.002991,14.73999 36.002991,14.73999 70.037994,0c-6.036987,-32.834015 -0.42099,-50.792999 22.966003,-66.27002c29.029999,-22.27298 62.350006,-45.506989 71.307007,-79.501984c13.759979,-50.664001 -32.995026,-105.081604 -93.180023,-111.5401c-15.212982,-2.710503 -30.832993,-3.016304 -46.370987,-2.824699z"/>
+   <g font-size="360.042908px" font-style="normal" font-weight="normal" fill="#e6e6e6" font-family="Sans" id="text2989"/>
+   <path fill="#ffffff" fill-opacity="0.60355" stroke-width="0.2" stroke-miterlimit="4" opacity="0" id="path3903" d="m369.884552,157.010208a116.720627,75.648331 0 1 1 -0.001099,-0.35994"/>
+   <path fill="url(#radialGradient4045)" id="path3952" d="m241.53125,80.0625c-44.510559,0.138306 -90.295959,23.424927 -109.75,64.5c-4.858971,11.627289 -7.821953,24.619263 -7.96875,37c-0.003639,0.030823 0.003609,0.062927 0,0.09375c-0.253723,2.169312 -0.427803,4.356018 -0.5,6.5625c6.60498,5.182404 13.916092,9.955017 21.875,14.25c11.191345,3.092194 20.965836,-0.363098 44.84375,-8.84375c0.790436,-24.152405 11.942078,-51.882019 40.03125,-62.15625c32.888855,-11.993652 78.196808,8.925507 79.21875,40.53125c-0.314545,21.827942 -23.05069,35.958466 -40.96875,48.6875c-2.803406,1.997314 -5.572754,4.074585 -8.28125,6.21875c45.648926,-1.79425 86.269836,-15.785004 114.46875,-37.03125c9.048279,-31.012177 -6.648315,-65.028992 -31.875,-83.65625c-27.066528,-21.389191 -63.071655,-26.349884 -96.78125,-26.125c-1.43222,-0.043945 -2.876678,-0.035706 -4.3125,-0.03125z"/>
+   <path fill="url(#radialGradient4004)" id="path4002" d="m250,10.8125c-91.126984,0 -165,48.398071 -165,108.125c0,23.251434 11.199333,44.803162 30.25,62.4375c0.585442,-4.838257 1.230057,-9.637817 2.25,-14.4375c4.904778,-51.39801 60.843353,-93.941559 121.5,-94.5625c2.001495,-0.0242 3.996811,-0.026245 6,-0.03125c14.022308,-0.0336 28.06308,0.503845 41.78125,2.9375c58.805695,6.283447 105.152893,56.779358 97.71875,106.3125c19.199524,-17.676208 30.5,-39.30542 30.5,-62.65625l0,-0.5c-0.432129,-59.525391 -74.179443,-107.625 -165,-107.625zm-0.5,117.25c-6.666092,0.081146 -13.270844,1.15744 -19.4375,3.40625c-28.089172,10.274231 -39.240814,38.003845 -40.03125,62.15625c-23.877914,8.480652 -33.652405,11.935944 -44.84375,8.84375c28.500397,15.380096 65.01265,24.625 104.8125,24.625c3.368286,0 6.712952,-0.057068 10.03125,-0.1875c2.708496,-2.144165 5.477844,-4.221436 8.28125,-6.21875c17.91806,-12.729034 40.654205,-26.859558 40.96875,-48.6875c-0.830322,-25.679657 -30.894867,-44.289093 -59.78125,-43.9375z"/>
+  </g>
+ </g>
+</svg>

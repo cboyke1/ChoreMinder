@@ -1,16 +1,15 @@
 <section data-ng-controller="ActivitiesController" data-ng-init="find()">
 
-        <h4>Activities</h4>
-      <input type="checkbox" ng-model="showPending">&nbsp;Show Pending
-      <p>&nbsp;
-    <div class="list-group">
-       <a class="list-group-item" ng-repeat="activity in activities|filter:pendingFilter|limitTo:10" href="#!/activities/{{activity._id}}/edit">
-              <span ng-include="'/modules/activities/views/viewActivityDetails.html'"></span>
-        </a>
-      </div>
-    </div>
+<h4>Activities</h4>
+<input type="checkbox" ng-model="showPending">&nbsp;Show Pending
+<p>&nbsp;
+<div class="list-group">
+  <a class="list-group-item" ng-repeat="activity in activities|filter:pendingFilter|limitTo:10" href="#!/activities/{{activity._id}}/edit">
+    <span ng-include="'/modules/activities/views/viewActivityDetails.html'"></span>
+  </a>
+</div>
 
-    <div class="alert alert-warning text-center" data-ng-hide="!activities.$resolved || activities.length">
-    	No Activities yet, why don't you <a href="/#!/activities/create">create one</a>?
-    </div>
+<div class="alert alert-warning text-center" data-ng-hide="!activities.$resolved || activities.length">
+  No Activities yet, why don't you <a href="/#!/activities/create">create one</a>?
+</div>
 </section>

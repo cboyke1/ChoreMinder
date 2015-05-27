@@ -22,8 +22,9 @@ angular.module('activities').controller('ActivitiesController',
 		$scope.initEdit = function() {
 			if(verbose) console.log('INIT EDIT');
 			var InitResource = $resource('/acInitForm');
-			$scope.findOne();
+			$scope.findOne($scope.initChildCheckboxes);
 			$scope.initData = InitResource.get();
+      console.log($scope.activity);
 
 		};
 
@@ -39,11 +40,12 @@ angular.module('activities').controller('ActivitiesController',
 				} else {
 
 					// Initialize the child checkboxes based on activity data
-					if(!$scope.activity) {
+					if(!$scope.activity || !$scope.activity.$resolved) {
 						console.log('activity not ready');
 						return;
 					}
-					console.log($scope.activity);
+          console.log('ACTIVITY');
+					//console.log($scope.activity);
 					var users=$scope.activity.users;
 					if(users === undefined || users.length===0) {
 						console.log('no users selected in activity');
@@ -51,11 +53,13 @@ angular.module('activities').controller('ActivitiesController',
 					}
 					for(var i=0;i<users.length;i++) {
 						var id=users[i]._id;
-						console.log(id);
-						document.getElementById(id).checked=true;
+						var checkbox = document.getElementById(id);
+            if(checkbox) {
+              checkbox.checked=true;
+            }
 					}
 				}
-			},250);
+			},100);
 		};
 
 
@@ -74,12 +78,8 @@ angular.module('activities').controller('ActivitiesController',
 			$scope.chore='';
 
 			if($scope.authentication.user.child) {
-				$scope.users=[$scope.authentication.user._id];
-			} else {
-				$scope.users=[];
+				$scope.activity.users=[$scope.authentication.user._id];
 			}
-			console.log($scope.users);
-
 		};
 
 		$scope.incrementPoints = function(amt) {
@@ -285,10 +285,8 @@ angular.module('activities').controller('ActivitiesController',
 		};
 
 		// Find existing Activity
-		$scope.findOne = function() {
-			$scope.activity = Activities.get({
-				activityId: $stateParams.activityId
-			});
+		$scope.findOne = function(fn) {
+			$scope.activity = Activities.get({activityId: $stateParams.activityId}, fn);
 			console.log('F1');
 		};
 	}
