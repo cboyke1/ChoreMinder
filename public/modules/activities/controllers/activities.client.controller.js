@@ -30,7 +30,6 @@ angular.module('activities').controller('ActivitiesController',
 
 
 		$scope.initChildCheckboxes = function() {
-			console.log('ICC');
 			$timeout(function() {
 				console.log('init child checkboxes');
 
@@ -40,7 +39,7 @@ angular.module('activities').controller('ActivitiesController',
 				} else {
 
 					// Initialize the child checkboxes based on activity data
-					if(!$scope.activity || !$scope.activity.$resolved) {
+					if(!$scope.activity || !$scope.activity.users) {
 						console.log('activity not ready');
 						return;
 					}
@@ -51,11 +50,14 @@ angular.module('activities').controller('ActivitiesController',
 						console.log('no users selected in activity');
 						return;
 					}
+          console.log(users.length);
 					for(var i=0;i<users.length;i++) {
 						var id=users[i]._id;
 						var checkbox = document.getElementById(id);
             if(checkbox) {
               checkbox.checked=true;
+            } else {
+              console.log('no checkbox with id ' + id);
             }
 					}
 				}
@@ -78,7 +80,8 @@ angular.module('activities').controller('ActivitiesController',
 			$scope.chore='';
 
 			if($scope.authentication.user.child) {
-				$scope.activity.users=[$scope.authentication.user._id];
+				$scope.activity.users=[$scope.authentication.user];
+        $scope.initChildCheckboxes();
 			}
 		};
 
