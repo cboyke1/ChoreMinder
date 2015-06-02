@@ -1,6 +1,3 @@
 @echo off
-echo MAKE SURE to RUN
-echo webdriver-manager start
-pause
-echo in another window
+echo MAKE SURE to RUN webdriver-manager start in another window
 protractor conf.js

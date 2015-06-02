@@ -1,6 +1,6 @@
 <section data-ng-controller="FamiliesController">
     <div class="page-header">
-        <h1>Create Family - Step 1</h1>
+        <h1 id="pt-header">Create Family - Step 1</h1>
     </div>
     Welcome!  The first step is to provide your family name.  Then, you will add children and a list
     of chores.  That's it!  Then, you're ready to use <em>ChoreMinder</em>!
@@ -14,7 +14,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <input type="submit" value="Next" class="btn btn-default">
+                    <input id="pt-next" type="submit" value="Next" class="btn btn-default">
                 </div>
 				<div data-ng-show="error" class="text-danger">
 					<strong data-ng-bind="error"></strong>

@@ -21,12 +21,13 @@ function handleErr(err, res) {
 /**
  * Create a Family.  This user becomes parent for that family.
  */
+
+/*jshint -W083 */
 exports.create = function(req, res) {
 	var family = new Family(req.body);
 	var user = req.user;
 	console.log(user);
 	family.user = user;
-	family.parents.push(user);
 
 	family.save(function(err) {
 		if (err) {
@@ -43,17 +44,34 @@ exports.create = function(req, res) {
 				return handleErr(err,res);
 			}
 			// Add "template" chores to family.
-			Chore.find({template: true}, function(err,res) {
+			Chore.find({template: true}, function(err,chores) {
 				if (err) {
-					return handleErr(err,res);
+					console.log(err);
 				}
-				console.log('found' + res.count() + ' template chores');
-				for(var i=0 ; i < res.count() ; i++ ) {
-					res[i]._id = undefined;
-					res[i].family = family._id;
-					res[i].template = false;
-					res.save();
+				console.log(chores);
+				console.log('found ' + chores.length + ' template chores');
+				/* jshint ignore:start */
+
+				for(var i=0 ; i < chores.length ; i++ ) {
+					var chore = chores[i];
+					var newChore = new Chore();
+					newChore.name = chore.name;
+					newChore.points = chore.points;
+					newChore.order = chore.order;
+					newChore.template = false;
+					newChore.family = family._id;
+
+					newChore.save(function(err) {
+						if (err) {
+							console.log('error in save');
+							console.log(err);
+						} else {
+							console.log('saved successfully:' + newChore._id );
+						}
+					});
 				}
+				/* jshint ignore:end */
+
 			});
 			res.jsonp(family);
 		});
@@ -87,21 +105,57 @@ exports.update = function(req, res) {
 };
 
 /**
- * Delete an Family
+ * Delete a Family
  */
-exports.delete = function(req, res) {
-	var family = req.family ;
 
+/* jshint ignore:start */
+exports.delete = function(req, res) {
+	console.log('Delete family');
+	var family = req.family ;
+	console.log(family);
+
+	var children = family.children;
+	for(var i=0 ; i < children.length ; i++ ) {
+		console.log('deleting user ' + children[i]);
+		User.findById(children[i]).remove(function(err) {
+			if(err) console.log(err);
+		});
+	}
+
+	var parents = family.parents;
+	for(var i=0 ; i < parents.length ; i++ ) {
+		console.log('deleting user ' + parents[i]);
+		User.findById(parents[i]).remove(function(err) {
+			if(err)	console.log(err);
+		});
+	}
+
+	var familyId = family._id;
+	Chore.find({family: familyId}, function(err, chores) {
+		if(err) {
+			console.log(err);
+		} else {
+			for(i=0; i < chores.length ; i++) {
+				chores[i].remove(function(err) {
+						console.log(err);
+				});
+			}
+		}
+	});
+
+	/* Finally - delete family */
 	family.remove(function(err) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
-			res.jsonp(family);
+			res.status(200).send('OK');
 		}
 	});
 };
+
+/* jshint ignore:end */
 
 
 /**
@@ -166,7 +220,7 @@ exports.addChild  = function(req,res,next) {
  * Family authorization middleware
  */
 exports.hasAuthorization = function(req, res, next) {
-	if (req.family.user.id !== req.user.id) {
+	if (!req.user.admin) {
 		return res.status(403).send('User is not authorized');
 	}
 	next();

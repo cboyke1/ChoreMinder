@@ -62,7 +62,7 @@ angular.module('chores').controller('ChoresController', ['$scope', '$stateParams
 			console.log('chores for family');
 			console.log($stateParams);
 			var res = $resource('/choresByFamily/' + $stateParams.familyId);
-			$scope.chores =	 res.get();
+			$scope.choreRes =	 res.get();
 		};
 
 		// Find existing Chore

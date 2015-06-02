@@ -7,19 +7,30 @@ angular.module('core').controller('HomeController', ['$scope', '$state', 'Authen
 
 		$scope.init = function() {
 			console.log('homeInit');
-			if(!$scope.authentication.user) {
+			var user = $scope.authentication.user;
+
+			if(!user) {
 					$state.go('anonymousHome');
 					return;
 			}
-			if($scope.authentication.user.admin) {
+			if(user.admin) {
 				$state.go('adminHome');
+				return;
 			}
-			if($scope.authentication.user.parent) {
+			if(user.parent) {
 				$state.go('parentHome');
+				return;
 			}
-			if($scope.authentication.user.child) {
+			if(user.child) {
 				$state.go('childHome');
+				return;
 			}
+
+			if(!user.family) {
+				$state.go('signUpStep1');
+				return;
+			}
+
 		};
 
 

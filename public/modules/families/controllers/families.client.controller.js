@@ -1,8 +1,8 @@
 'use strict';
 
 // Families controller
-angular.module('families').controller('FamiliesController', ['$scope', '$stateParams', '$http', '$location', 'Authentication', 'Families', 'Users',
-	function($scope, $stateParams, $http, $location, Authentication, Families, Users) {
+angular.module('families').controller('FamiliesController', ['$scope', '$stateParams', '$resource', '$http', '$location', 'Authentication', 'Families', 'Users',
+	function($scope, $stateParams, $resource, $http, $location, Authentication, Families, Users) {
 		$scope.authentication = Authentication;
 
 		// Create child user - add to current family
@@ -35,6 +35,10 @@ angular.module('families').controller('FamiliesController', ['$scope', '$statePa
 
 			// Redirect after save
 			family.$save(function(response) {
+				// Reload user as values have changed.
+				var user = $resource('/users/me');
+				Authentication.user = user.get();
+
 				$location.path('families/addChildren');
 
 				// Clear form fields

@@ -1,5 +1,5 @@
 <section data-ng-controller="ChoresController" data-ng-init="findOne()">
-	<span ng-if="authentication.user.parent">
+	<span ng-if="authentication.user.parent || authentication.user.admin">
 		<span ng-include="'/modules/chores/views/edit-chore.client.view.html'"></span>
 	</span>
 

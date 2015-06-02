@@ -53,7 +53,7 @@ describe('Request Chore', function() {
   describe('step 6', function() {
     it('new chore should appear at top of list on home page', function() {
       var activities = element.all(by.repeater('activity in activities'));
-      expect(activities.count()).toEqual(activityCount+2);
+      expect(activities.count()).toEqual(activityCount+1);
     });
   });
 

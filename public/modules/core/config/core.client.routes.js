@@ -4,7 +4,7 @@
 angular.module('core').config(['$stateProvider', '$urlRouterProvider',
 	function($stateProvider, $urlRouterProvider) {
 		// Redirect to home view when route not found
-		//$urlRouterProvider.otherwise('/');
+		$urlRouterProvider.otherwise('/');
 
 		// Home state routing
 		$stateProvider.
@@ -23,6 +23,10 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider',
 		state('childHome', {
 			url: '/childHome',
 			templateUrl: 'modules/core/views/homeChildView.html'
+		}).
+		state('signUpStep1', {
+			url: '/signUpStep1',
+			templateUrl: 'modules/families/views/create-family.client.view.html'
 		}).
 		state('adminHome', {
 			url: '/adminHome',
