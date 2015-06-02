@@ -9,6 +9,10 @@ module.exports = function(app) {
 		.get(chores.list)
 		.post(users.requiresLogin, chores.create);
 
+	// Chores Routes
+  app.route('/choresByFamily/:familyId')
+			.get(chores.listByFamily);
+
 	app.route('/chores/:choreId')
 		.get(chores.read)
 		.put(users.requiresLogin, chores.hasAuthorization, chores.update)

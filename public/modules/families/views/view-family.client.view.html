@@ -1,18 +1,12 @@
 <section data-ng-controller="FamiliesController" data-ng-init="findOne()">
-	<span ng-if="authentication.user.parent">
-	<div id="pt-request-chore" class="up-left">
-		<a href="/#!/activities/create?type=request"><img src="/modules/core/img/orange_qm.jpg" border=0 alt="Request"></a>
-	</div>
+<span ng-if="authentication.user.admin">
 
-	<div id="pt-complete-chore" class="up-right">
-	  <a href="/#!/activities/create"><img src="/modules/core/img/check.jpg" border=0 alt="Chore Done!"></a>
-	</div>
+Family Name: <span id="pt-family-name">
+		{{ family.name }}
+	</span>
 
-
-	<div id="pt-family-name" class="page-header">
-		<h4>{{ family.name }}</h4>
-	</div>
-
+<p>
+Children:
 	<p>&nbsp;<p>
 	<div class="list-group">
 		<span class="list-group-item" data-ng-repeat="user in family.children">
@@ -20,9 +14,23 @@
 		  <span class="pull-right"> {{ user.points }}</span><br>
 		</span>
 	</div>
-	<span ng-if="authentication.user.parent">
-	    <span ng-include="'/modules/activities/views/parentListActivities.html'"></span>
+
+<p>
+Chores:
+
+<div data-ng-controller="ChoresController" data-ng-init="choresForFamily()">
+
+	<span class="list-group-item" data-ng-repeat="chore in chores.chores">
+		<span> {{chore.name}}</span>
+		<span> {{chore.points}}</span><br>
 	</span>
 
-</center>
+	Json:
+	{{chores | json }}
+</div>
+
+
+
+</span>
+
 </section>

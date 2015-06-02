@@ -1,8 +1,8 @@
 'use strict';
 
 // Chores controller
-angular.module('chores').controller('ChoresController', ['$scope', '$stateParams', '$location', 'Authentication', 'Chores',
-	function($scope, $stateParams, $location, Authentication, Chores) {
+angular.module('chores').controller('ChoresController', ['$scope', '$stateParams', '$resource','$location', 'Authentication', 'Chores',
+	function($scope, $stateParams, $resource, $location, Authentication, Chores) {
 		$scope.authentication = Authentication;
 
 		// Create new Chore
@@ -56,6 +56,13 @@ angular.module('chores').controller('ChoresController', ['$scope', '$stateParams
 		// Find a list of Chores
 		$scope.find = function() {
 			$scope.chores = Chores.query();
+		};
+
+		$scope.choresForFamily = function() {
+			console.log('chores for family');
+			console.log($stateParams);
+			var res = $resource('/choresByFamily/' + $stateParams.familyId);
+			$scope.chores =	 res.get();
 		};
 
 		// Find existing Chore

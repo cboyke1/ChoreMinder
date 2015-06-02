@@ -1,20 +1,41 @@
 'use strict';
 
 // Families controller
-angular.module('families').controller('FamiliesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Families',
-	function($scope, $stateParams, $location, Authentication, Families) {
+angular.module('families').controller('FamiliesController', ['$scope', '$stateParams', '$http', '$location', 'Authentication', 'Families', 'Users',
+	function($scope, $stateParams, $http, $location, Authentication, Families, Users) {
 		$scope.authentication = Authentication;
+
+		// Create child user - add to current family
+		$scope.addChild = function() {
+			var child = new Users({
+				firstName: this.credentials.firstName,
+				displayName: this.credentials.firstName,
+				email: this.credentials.email,
+				username: this.credentials.email,
+				password: this.credentials.password
+			});
+			console.log(child);
+			$http.post('/familyAddChild',{child: child})
+			.success(function() {
+				console.log('success');
+				$location.path('/');
+			})
+			.error(function() {
+				console.log('error');
+			});
+		};
 
 		// Create new Family
 		$scope.create = function() {
 			// Create new Family object
 			var family = new Families ({
-				name: this.name
+				name: this.name,
+				parents: [$scope.authentication.user._id]
 			});
 
 			// Redirect after save
 			family.$save(function(response) {
-				$location.path('families/' + response._id);
+				$location.path('families/addChildren');
 
 				// Clear form fields
 				$scope.name = '';
@@ -58,14 +79,13 @@ angular.module('families').controller('FamiliesController', ['$scope', '$statePa
 
 		// Find existing Family
 		$scope.findOne = function() {
+			console.log('family - findOne');
 			var familyId = $stateParams.familyId;
 			if(!familyId) {
 				familyId = $scope.authentication.user.family;
 			}
 			console.log('family id: ' + familyId);
-			$scope.family = Families.get({
-				familyId: familyId
-			});
+			$scope.family = Families.get({familyId: familyId });
 		};
 	}
 ]);

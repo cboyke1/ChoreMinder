@@ -9,6 +9,9 @@ module.exports = function(app) {
 		.get(families.list)
 		.post(users.requiresLogin, families.create);
 
+	app.route('/familyAddChild')
+		.post(families.addChild);
+
 	app.route('/families/:familyId')
 		.get(families.read)
 		.put(users.requiresLogin, families.hasAuthorization, families.update)

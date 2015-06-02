@@ -262,7 +262,7 @@ angular.module('activities').controller('ActivitiesController',
 			}
 
 			activity.$update(function() {
-				$location.path('activities');
+				$location.path('/');
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});

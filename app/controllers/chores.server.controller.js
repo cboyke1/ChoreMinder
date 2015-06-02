@@ -86,6 +86,25 @@ exports.list = function(req, res) {
 };
 
 /**
+ * List of Chores
+ */
+exports.listByFamily = function(req, res) {
+	console.log('listByFamily');
+	var id = req.params.familyId;
+	console.log('family ID: ' + id);
+	Chore.find({family: id}).sort('order').exec(function(err, chores) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			res.jsonp({chores:chores});
+		}
+	});
+};
+
+
+/**
  * Chore middleware
  */
 exports.choreByID = function(req, res, next, id) {
