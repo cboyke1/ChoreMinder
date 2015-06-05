@@ -1,0 +1,26 @@
+<section data-ng-controller="ChoresController" data-ng-init="find()">
+
+<div class="board">
+  <div class="list-group" data-as-sortable="dragControlListeners" data-ng-model="chores">
+    <a data-ng-repeat="chore in chores" data-ng-href="#!/chores/{{chore._id}}" class="list-group-item" data-as-sortable-item>
+      {{ chore.name}}:   &nbsp;
+      {{ chore.points}}
+      <span ng-if="chore.points==1">pt</span>
+      <span ng-if="chore.points!=1">pts</span>
+
+
+      <span class="pull-right"  data-as-sortable-item-handle>---</span>
+    </a>
+  </div>
+</div>
+
+
+    <div class="pull-left">
+        <a href="/#!/chores/create">Add a Chore</a>
+    </div>
+
+    <div class="pull-right">
+      <a href="/">Done</a>
+    </div>
+
+</section>

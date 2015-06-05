@@ -5,33 +5,27 @@ angular.module('core').controller('HomeController', ['$scope', '$state', 'Authen
 		// This provides Authentication context.
 		$scope.authentication = Authentication;
 
-		$scope.init = function() {
-			console.log('homeInit');
+		$scope.getHomePageView = function() {
 			var user = $scope.authentication.user;
-
 			if(!user) {
-					$state.go('anonymousHome');
-					return;
+				return('modules/core/views/homeAnonymousView.html');
 			}
 			if(user.admin) {
-				$state.go('adminHome');
-				return;
+				return 'modules/core/views/homeAdminView.html';
 			}
 			if(user.parent) {
-				$state.go('parentHome');
-				return;
+				return('modules/core/views/homeParentView.html');
 			}
 			if(user.child) {
-				$state.go('childHome');
-				return;
+			return 'modules/core/views/homeChildView.html';
 			}
-
 			if(!user.family) {
-				$state.go('signUpStep1');
-				return;
+				return 'modules/families/views/create-family.client.view.html';
 			}
 
 		};
+
+		
 
 
 	}

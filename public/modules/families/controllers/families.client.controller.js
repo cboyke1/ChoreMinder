@@ -18,12 +18,21 @@ angular.module('families').controller('FamiliesController', ['$scope', '$statePa
 			$http.post('/familyAddChild',{child: child})
 			.success(function() {
 				console.log('success');
-				$location.path('/');
+				$location.path('/families/addAnother');
 			})
 			.error(function() {
 				console.log('error');
 			});
 		};
+
+		$scope.addAnotherYes = function() {
+			$location.path('/families/addChildren');
+		};
+
+		$scope.addAnotherNo = function() {
+			$location.path('/chore/addChoreIntro');
+		};
+
 
 		// Create new Family
 		$scope.create = function() {

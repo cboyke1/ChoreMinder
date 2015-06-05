@@ -17,6 +17,10 @@ angular.module('families').config(['$stateProvider',
 			url: '/families/addChildren',
 			templateUrl: 'modules/families/views/createChild.html'
 		}).
+		state('addAnother', {
+			url: '/families/addAnother',
+			templateUrl: 'modules/families/views/addAnother.html'
+		}).
 		state('viewFamily', {
 			url: '/families/:familyId',
 			templateUrl: 'modules/families/views/view-family.client.view.html'

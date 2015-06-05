@@ -1,6 +1,6 @@
 'use strict';
 
-// Configuring the Articles module
+// Configuring the Chores module
 angular.module('chores').run(['Menus',
 	function(Menus) {
 		// Set top bar menu items

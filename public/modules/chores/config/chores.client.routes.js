@@ -17,6 +17,10 @@ angular.module('chores').config(['$stateProvider',
 			url: '/chores/:choreId',
 			templateUrl: 'modules/chores/views/view-chore.client.view.html'
 		}).
+		state('addChoreIntro', {
+			url: '/chore/addChoreIntro',
+			templateUrl: 'modules/chores/views/addChoreIntro.html'
+		}).
 		state('editChore', {
 			url: '/chores/:choreId/edit',
 			templateUrl: 'modules/chores/views/edit-chore.client.view.html'

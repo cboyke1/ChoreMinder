@@ -61,7 +61,7 @@ angular.module('activities').controller('ActivitiesController',
             }
 					}
 				}
-			},100);
+			},250);
 		};
 
 
@@ -233,14 +233,21 @@ angular.module('activities').controller('ActivitiesController',
 
 		// Remove existing Activity
 		$scope.remove = function(activity) {
-			console.log('REMOVE');
+      if($scope.preventDup) {
+        $scope.debug('preventDup');
+        return;
+      }
+
+      $scope.preventDup=true;
+      $timeout(function() {
+        $scope.preventDup=false;
+      },100);
+
 			if(confirm('Are you sure you want to delete this activity?')) {
 				if ( activity ) {
-					console.log('1');
 					activity.$remove();
 					$location.path('/');
 				} else {
-					console.log('2');
 					$scope.activity.$remove(function() {
 						$location.path('/');
 					});
@@ -286,6 +293,11 @@ angular.module('activities').controller('ActivitiesController',
 				});
 			}
 		};
+
+    $scope.debug = function(str) {
+      $scope.debugStr += '<br>' + str;
+    };
+
 
 		// Find existing Activity
 		$scope.findOne = function(fn) {

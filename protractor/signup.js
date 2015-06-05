@@ -49,5 +49,11 @@ describe('New Family Sign Up', function() {
     });
   });
 
+  describe('step 6', function() {
+    it('should sign out', function() {
+      browser.get('http://localhost/auth/signout');
+    });
+  });
+
 
 });

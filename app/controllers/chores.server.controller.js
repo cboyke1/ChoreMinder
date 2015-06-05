@@ -116,6 +116,36 @@ exports.choreByID = function(req, res, next, id) {
 	});
 };
 
+function handleErr(err, res) {
+		if(err) {
+			console.log(err);
+			return res.status(400).send({ message: errorHandler.getErrorMessage(err)});
+		}
+	}
+
+function setOrder(id,i,res) {
+	console.log('order: ' + id + '= ' + i);
+	Chore.findById(id).exec(function(err, chore) {
+		if(err) return handleErr(err,res);
+		chore.order = i;
+		chore.save();
+	});
+}
+
+exports.reorder = function(req,res) {
+	if (!(req.user.parent && req.user.family.toString() === req.body.chores[0].family.toString() )) {
+		return res.status(403).send('User is not authorized');
+	}
+
+	console.log(req.body.chores);
+	var chores = req.body.chores;
+
+	for(var i=0 ; i < chores.length ; i++) {
+		var choreId = chores[i]._id;
+		setOrder(choreId,i,res);
+	}
+};
+
 /**
  * Chore authorization middleware
  */

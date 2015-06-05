@@ -1,0 +1,22 @@
+<div class="page-header">
+        <h1>Chores</h1>
+    </div>
+    Now, you will set up the chores that your family performs.  We've started with a standard list, shown below.
+    <p>&nbsp;<p>
+    You can use this list as-is, or edit these chores, add your own, etc.
+    <p>&nbsp;<p>
+    Note that each chore has a <strong>point</strong> value - this is the amount of points a child will earn when they
+    complete the chore <em>(although as the parent, you will always have the ability to reward additional points for a job
+    especially well done!)</em>
+
+    <p>&nbsp;<p>
+
+<section data-ng-controller="ChoresController" data-ng-init="find()">
+
+  <div>This is the list of chores for your family.  Click on a chore to edit, or click "Add" below to add a new chore.
+
+    <ng-include src="'/modules/chores/views/listChoresCommon.html'"/>
+  </div>
+</section>
+
+</div>

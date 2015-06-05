@@ -1,8 +1,8 @@
 'use strict';
 
 // Chores controller
-angular.module('chores').controller('ChoresController', ['$scope', '$stateParams', '$resource','$location', 'Authentication', 'Chores',
-	function($scope, $stateParams, $resource, $location, Authentication, Chores) {
+angular.module('chores').controller('ChoresController', ['$scope', '$http', '$stateParams', '$resource','$location', 'Authentication', 'Chores',
+	function($scope, $http, $stateParams, $resource, $location, Authentication, Chores) {
 		$scope.authentication = Authentication;
 
 		// Create new Chore
@@ -70,6 +70,19 @@ angular.module('chores').controller('ChoresController', ['$scope', '$stateParams
 			$scope.chore = Chores.get({
 				choreId: $stateParams.choreId
 			});
+		};
+
+		$scope.dragControlListeners = {
+    	accept: function (sourceItemHandleScope, destSortableScope) {return true;},
+    	itemMoved: function (event) {},
+    	orderChanged: function(event) {
+				for(var i=0 ; i < $scope.chores.length ; i ++ ) {
+					$scope.chores[i].order=i;
+				}
+				$http.post('/chore/reorder',{chores : $scope.chores});
+				return true;
+			},
+    	containment: '#board'
 		};
 	}
 ]);

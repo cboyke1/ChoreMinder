@@ -13,6 +13,9 @@ module.exports = function(app) {
   app.route('/choresByFamily/:familyId')
 			.get(chores.listByFamily);
 
+	app.route('/chore/reorder')
+		.post(chores.reorder);
+
 	app.route('/chores/:choreId')
 		.get(chores.read)
 		.put(users.requiresLogin, chores.hasAuthorization, chores.update)
