@@ -127,8 +127,10 @@ function setOrder(id,i,res) {
 	console.log('order: ' + id + '= ' + i);
 	Chore.findById(id).exec(function(err, chore) {
 		if(err) return handleErr(err,res);
-		chore.order = i;
-		chore.save();
+		if(chore) {
+			chore.order = i;
+			chore.save();
+		}
 	});
 }
 

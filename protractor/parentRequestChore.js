@@ -2,7 +2,7 @@
 
 var activityCount=0;
 
-describe('Request Chore', function() {
+describe('Parent Request Chore', function() {
   describe('step 1', function() {
     it('should display sign in message', function() {
       browser.get('http://localhost');
@@ -13,13 +13,13 @@ describe('Request Chore', function() {
   });
   describe('step 2', function() {
     it('should display login form', function() {
-      element(by.id('username')).sendKeys('testc1@example.com');
+      element(by.id('username')).sendKeys('testp@example.com');
       element(by.id('password')).sendKeys('password');
       element(by.id('signin')).click();
     });
   });
   describe('step 3', function() {
-    it('should display home page for child', function() {
+    it('should display home page for parent', function() {
       element(by.binding('family.name')).getText().then( function(name) {
         expect(name).toBe('Test Family');
       });
@@ -57,6 +57,11 @@ describe('Request Chore', function() {
     });
   });
 
+  describe('step 7', function() {
+    it('should sign out', function() {
+      browser.get('http://localhost/auth/signout');
+    });
+  });
 
 
 });

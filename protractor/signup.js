@@ -43,13 +43,31 @@ describe('New Family Sign Up', function() {
   });
 
   describe('step 5', function() {
-    it('should display Parent Home page', function() {
+    it('Add another y/n page', function() {
+      var header = element(by.id('pt-header'));
+      expect(header.getText()).toEqual('Add Another Child?');
+      element(by.id('pt-add-another-no')).click();
+
+    });
+  });
+
+  describe('step 6', function() {
+    it('should display Chores page', function() {
+      var header = element(by.id('pt-header'));
+      expect(header.getText()).toEqual('Chores');
+      element(by.id('pt-done')).click();
+    });
+  });
+
+  describe('step 7', function() {
+    it('should display family home page', function() {
       var header = element(by.id('pt-family-name'));
       expect(header.getText()).toEqual('Test Family');
     });
   });
 
-  describe('step 6', function() {
+
+  describe('step 8', function() {
     it('should sign out', function() {
       browser.get('http://localhost/auth/signout');
     });

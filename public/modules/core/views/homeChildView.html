@@ -1,10 +1,11 @@
 <section data-ng-controller="ActivitiesController" data-ng-init="find()">
 
-<center>
-  <h4>Welcome, {{ authentication.user.displayName}}.  <br>You have {{authentication.user.points}} points</h4>
-</center>
+<div id="pt-header" class="page-header">
+  <h4>Welcome, {{ authentication.user.displayName}}.<br>You have {{authentication.user.points}} points</h4>
+</div>
+
 <div class="up-right">
-  <a href="/#!/activities/create"><img src="/modules/core/img/check.jpg" border=0 alt="Chore Done!"></a>
+  <a id="pt-chore-complete" href="/#!/activities/create"><img src="/modules/core/img/check.jpg" border=0 alt="Chore Done!"></a>
 </div>
 <p>
 
