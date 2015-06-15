@@ -9,12 +9,13 @@ angular.module('chores').controller('ChoresController', ['$scope', '$http', '$st
 		$scope.create = function() {
 			// Create new Chore object
 			var chore = new Chores ({
-				name: this.name
+				name: this.name,
+				points: this.points
 			});
 
 			// Redirect after save
 			chore.$save(function(response) {
-				$location.path('chores/' + response._id);
+				$location.path('/chores');
 
 				// Clear form fields
 				$scope.name = '';
@@ -47,7 +48,7 @@ angular.module('chores').controller('ChoresController', ['$scope', '$http', '$st
 			var chore = $scope.chore;
 
 			chore.$update(function() {
-				$location.path('chores');
+				$location.path('/chores');
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});

@@ -1,2 +1,5 @@
 
-ADMIN HOME
+
+<span ng-if="authentication.user.admin">
+    <span ng-include="'/modules/families/views/list-families.client.view.html'"></span>
+</span>

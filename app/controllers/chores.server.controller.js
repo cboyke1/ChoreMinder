@@ -13,7 +13,11 @@ var mongoose = require('mongoose'),
  */
 exports.create = function(req, res) {
 	var chore = new Chore(req.body);
-	chore.family = req.user.family;
+	if(req.user.admin) {
+		chore.template=true;
+	} else {
+		chore.family = req.user.family;
+	}
 
 	chore.save(function(err) {
 		if (err) {
@@ -40,7 +44,11 @@ exports.update = function(req, res) {
 	var chore = req.chore ;
 
 	chore = _.extend(chore , req.body);
-	chore.family = req.user.family;
+	if(req.user.admin) {
+		chore.template=true;
+	} else {
+		chore.family = req.user.family;
+	}
 
 	chore.save(function(err) {
 		if (err) {
@@ -74,7 +82,11 @@ exports.delete = function(req, res) {
  * List of Chores
  */
 exports.list = function(req, res) {
-	Chore.find({family: req.user.family}).sort('order').exec(function(err, chores) {
+	var criteria ={family: req.user.family};
+	if(req.user.admin) {
+		criteria = {template: true};
+	}
+	Chore.find(criteria).sort('order').exec(function(err, chores) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -135,10 +147,6 @@ function setOrder(id,i,res) {
 }
 
 exports.reorder = function(req,res) {
-	if (!(req.user.parent && req.user.family.toString() === req.body.chores[0].family.toString() )) {
-		return res.status(403).send('User is not authorized');
-	}
-
 	console.log(req.body.chores);
 	var chores = req.body.chores;
 
@@ -152,8 +160,9 @@ exports.reorder = function(req,res) {
  * Chore authorization middleware
  */
 exports.hasAuthorization = function(req, res, next) {
-	if (!(req.user.parent && req.user.family.toString() === req.chore.family.toString() )) {
-		return res.status(403).send('User is not authorized');
+	if(req.user.admin || (req.user.parent && req.user.family.toString() === req.chore.family.toString())) {
+		next();
+	} else {
+ 		return res.status(403).send('User is not authorized');
 	}
-	next();
 };

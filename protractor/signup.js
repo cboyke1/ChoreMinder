@@ -24,7 +24,7 @@ describe('New Family Sign Up', function() {
     it('should display create family page', function() {
       var header = element(by.id('pt-header'));
       expect(header.getText()).toEqual('Create Family - Step 1');
-      element(by.id('name')).sendKeys('Test Family');
+      element(by.id('name')).sendKeys('PT Test Family');
       element(by.id('pt-next')).click();
 
     });
@@ -62,7 +62,7 @@ describe('New Family Sign Up', function() {
   describe('step 7', function() {
     it('should display family home page', function() {
       var header = element(by.id('pt-family-name'));
-      expect(header.getText()).toEqual('Test Family');
+      expect(header.getText()).toEqual('PT Test Family');
     });
   });
 

@@ -14,7 +14,7 @@ module.exports = function(app) {
 			.get(chores.listByFamily);
 
 	app.route('/chore/reorder')
-		.post(chores.reorder);
+		.post(chores.hasAuthorization, chores.reorder);
 
 	app.route('/chores/:choreId')
 		.get(chores.read)

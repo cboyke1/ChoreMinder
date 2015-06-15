@@ -1,4 +1,5 @@
 exports.config = {
   seleniumAddress: 'http://localhost:4444/wd/hub',
-  specs: ['signup.js','parentRequestChore.js','childCompleteChore.js']
+  specs: ['signup.js','adminDelete.js','parentRequestChore.js','childCompleteChore.js']
+
 };

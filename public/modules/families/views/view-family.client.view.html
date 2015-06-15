@@ -1,7 +1,6 @@
 <section data-ng-controller="FamiliesController" data-ng-init="findOne()">
 <span ng-if="authentication.user.admin">
-
-Family Name: <span id="pt-family-name"> {{ family.name }}	</span>
+	<div id="pt-header" class="page-header"><h1>{{ family.name }}</h1></div>
 
 <p>
 Parents:
@@ -37,7 +36,7 @@ json:
 
 Warning: delete will delete all users and chores associated with this family!
 <br>
-<a class="btn btn-primary" data-ng-click="remove();">
+<a id="pt-remove" class="btn btn-primary" data-ng-click="remove();">
 	<i class="glyphicon glyphicon-trash"></i>
 </a>
 

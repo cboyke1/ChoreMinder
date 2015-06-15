@@ -9,7 +9,12 @@
   </a>
 </div>
 
-<div class="alert alert-warning text-center" data-ng-hide="!activities.$resolved || activities.length">
-  No Activities yet, why don't you <a href="/#!/activities/create">create one</a>?
+<div data-ng-hide="!activities.$resolved || activities.length">
+  To get started, click on the <a href="/#!/activities/create?type=request"><img src="/modules/core/img/orange_qm.jpg" border=0 alt="Request"></a> icon in the upper left corner
+  to "request" a chore.  This chore will show up in the child's "assigned" list when they log in to ChoreMinder.
+  <p>&nbsp;<p>
+  Or, if a child has already completed a chore, click on the <a href="/#!/activities/create"><img src="/modules/core/img/check.jpg" border=0 alt="Chore Done!"></a> icon
+  in the upper right corner.
+
 </div>
 </section>
