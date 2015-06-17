@@ -190,15 +190,20 @@ exports.delete = function(req, res) {
 };
 
 /**
- * List of Activities - fetch all for family
+ * List of Activities - fetch all for family - limit to last 100
  */
 exports.list = function(req, res) {
 	console.log('LIST');
-	if(!req.user.family) {
+	if(!(req.user.family || req.user.admin)) {
 		res.jsonp({});
 		return;
 	}
-	var criteria={family: req.user.family};
+	var criteria;
+	if(req.user.family) {
+		criteria={family: req.user.family};
+	} else {
+		criteria={};
+	}
 	Activity.find(criteria).sort('-created').populate('chore users').exec(function(err, activities) {
 		if (err) {
 			return res.status(400).send({

@@ -5,7 +5,7 @@ describe('Admin Delete Test Family', function() {
     it('should display sign in message', function() {
       browser.get('http://localhost');
       expect(browser.getTitle()).toContain('ChoreMinder');
-      element(by.id('signin')).click();
+      element(by.id('pt-signin')).click();
     });
   });
   describe('step 2', function() {

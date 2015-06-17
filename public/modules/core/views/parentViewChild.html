@@ -1,0 +1,21 @@
+<section data-ng-controller="ChildController" data-ng-init="findOne()">
+
+
+  <span ng-include="'/modules/core/views/parentButtons.html'"></span>
+
+  <div id="pt-header" class="page-header">
+    <h4>{{ data.child.displayName }}:  {{data.child.points}} points</h4>
+  </div>
+
+  <p>&nbsp;<p>
+  <h4>Activities:</h4>
+
+  <div class="list-group">
+    <a class="list-group-item" ng-repeat="activity in data.activities" href="#!/activities/{{activity._id}}/edit">
+      <span ng-include="'/modules/activities/views/viewActivityDetails.html'"></span>
+    </a>
+  </div>
+
+{{child}}
+
+</section>

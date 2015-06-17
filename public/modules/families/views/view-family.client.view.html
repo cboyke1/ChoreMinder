@@ -2,43 +2,42 @@
 <span ng-if="authentication.user.admin">
 	<div id="pt-header" class="page-header"><h1>{{ family.name }}</h1></div>
 
-<p>
-Parents:
-	<p>&nbsp;<p>
-	<div class="list-group">
-		<span class="list-group-item" data-ng-repeat="user in family.parents">
-			<span> {{ user.displayName }}</span>
+	<p>
+	Parents:
+		<p>&nbsp;<p>
+		<div class="list-group">
+			<span class="list-group-item" data-ng-repeat="user in family.parents">
+				<span> {{ user.displayName }}</span>
+			</span>
+		</div>
+
+	<p>
+	Children:
+		<p>&nbsp;<p>
+		<div class="list-group">
+			<span class="list-group-item" data-ng-repeat="user in family.children">
+				<span class="pull-left"> {{ user.displayName }}</span>
+			  <span class="pull-right"> {{ user.points }}</span><br>
+			</span>
+		</div>
+
+	<p>
+	Chores:
+
+	<div class="list-group" data-ng-controller="ChoresController" data-ng-init="choresForFamily()">
+
+		<span class="list-group-item" data-ng-repeat="chore in choreRes.chores">
+			<span> {{chore.name}}</span>
+			<span> {{chore.points}}</span><br>
 		</span>
 	</div>
 
-<p>
-Children:
-	<p>&nbsp;<p>
-	<div class="list-group">
-		<span class="list-group-item" data-ng-repeat="user in family.children">
-			<span class="pull-left"> {{ user.displayName }}</span>
-		  <span class="pull-right"> {{ user.points }}</span><br>
-		</span>
-	</div>
 
-<p>
-Chores:
-
-<div class="list-group" data-ng-controller="ChoresController" data-ng-init="choresForFamily()">
-
-	<span class="list-group-item" data-ng-repeat="chore in choreRes.chores">
-		<span> {{chore.name}}</span>
-		<span> {{chore.points}}</span><br>
-	</span>
-</div>
-json:
-<pre>{{ choreRes | json}} </pre>
-
-Warning: delete will delete all users and chores associated with this family!
-<br>
-<a id="pt-remove" class="btn btn-primary" data-ng-click="remove();">
-	<i class="glyphicon glyphicon-trash"></i>
-</a>
+	Warning: delete will delete all users and chores associated with this family!
+	<br>
+	<a id="pt-remove" class="btn btn-primary" data-ng-click="remove();">
+		<i class="glyphicon glyphicon-trash"></i>
+	</a>
 
 </span>
 

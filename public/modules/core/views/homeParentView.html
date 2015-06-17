@@ -1,13 +1,5 @@
 <section data-ng-controller="FamiliesController" data-ng-init="findOne()">
-	<span ng-if="authentication.user.parent">
-	<div id="pt-request-chore" class="up-left">
-		<a href="/#!/activities/create?type=request"><img src="/modules/core/img/orange_qm.jpg" border=0 alt="Request"></a>
-	</div>
-
-	<div id="pt-complete-chore" class="up-right">
-	  <a href="/#!/activities/create"><img src="/modules/core/img/check.jpg" border=0 alt="Chore Done!"></a>
-	</div>
-
+	<span ng-include="'/modules/core/views/parentButtons.html'"></span>
 
 	<div id="pt-family-name" class="page-header">
 		<h4>{{ family.name }}</h4>
@@ -15,10 +7,10 @@
 
 	<p>&nbsp;<p>
 	<div class="list-group">
-		<span class="list-group-item" data-ng-repeat="user in family.children">
-			<span class="pull-left"> {{ user.displayName }}</span>
-		  <span class="pull-right"> {{ user.points }}</span><br>
-		</span>
+		<a class="list-group-item" data-ng-repeat="child in family.children" href="#!/viewChild?id={{child._id}}">
+			<span class="pull-left"> {{ child.displayName }}</span>
+		  <span class="pull-right"> {{ child.points }}</span><br>
+		</a>
 	</div>
 	<span ng-if="authentication.user.parent">
 	    <span ng-include="'/modules/activities/views/parentListActivities.html'"></span>

@@ -73,6 +73,7 @@ angular.module('activities').controller('ActivitiesController',
 			} else {
 				$scope.type='complete';
 			}
+
 			console.log($scope.type);
 			var InitResource = $resource('/acInitForm');
 			$scope.initData = InitResource.get();
@@ -83,6 +84,12 @@ angular.module('activities').controller('ActivitiesController',
 				$scope.activity.users=[$scope.authentication.user];
         $scope.initChildCheckboxes();
 			}
+      var childId = $location.search().childId;
+      if(childId) {
+        console.log('child id ' + childId);
+        $scope.activity.users=[{_id: childId}];
+        $scope.initChildCheckboxes();
+      }
 		};
 
 		$scope.incrementPoints = function(amt) {
@@ -191,6 +198,7 @@ angular.module('activities').controller('ActivitiesController',
 
 			if(this.chore==='') {
 				$scope.errorNoChore=true;
+        window.scrollTo(0, 0);
 				return;
 			} else {
 				$scope.errorNoChore=false;
