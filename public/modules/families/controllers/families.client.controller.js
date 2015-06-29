@@ -11,7 +11,7 @@ angular.module('families').controller('FamiliesController', ['$scope', '$statePa
 				firstName: this.credentials.firstName,
 				displayName: this.credentials.firstName,
 				email: this.credentials.email,
-				username: this.credentials.email,
+				username: this.credentials.username,
 				password: this.credentials.password
 			});
 			console.log(child);
@@ -20,8 +20,8 @@ angular.module('families').controller('FamiliesController', ['$scope', '$statePa
 				console.log('success');
 				$location.path('/families/addAnother');
 			})
-			.error(function() {
-				console.log('error');
+			.error(function(response) {
+				$scope.error = response.message;
 			});
 		};
 

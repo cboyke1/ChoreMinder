@@ -8,7 +8,7 @@
 		<form name="userForm" data-ng-submit="addChild()" class="signin form-horizontal" novalidate autocomplete="off">
 			<fieldset>
 				<div class="form-group">
-					<label for="firstName">First Name</label>
+					<label for="firstName">First Name<font color="red">*</font></label>
 					<input type="text" required id="firstName" name="firstName" class="form-control" data-ng-model="credentials.firstName" placeholder="First Name">
 				</div>
 				<div class="form-group">
@@ -16,8 +16,12 @@
 					<input type="email" id="email" name="email" class="form-control" data-ng-model="credentials.email" placeholder="Email">
 				</div>
 				<div class="form-group">
-					<label for="password">Password</label>
-					<input type="password" id="password" name="password" class="form-control" data-ng-model="credentials.password" placeholder="Password">
+					<label for="username">Username<font color="red">*</font></label>
+					<input id="username" name="username" class="form-control" data-ng-model="credentials.username" placeholder="username" ng-required="true">
+				</div>
+				<div class="form-group">
+					<label for="password">Password<font color="red">*</font></label>
+					<input type="password" id="password" name="password" class="form-control" data-ng-model="credentials.password" placeholder="Password" ng-required="true">
 				</div>
 				<div class="text-center form-group">
 					<button id="pt-next" type="submit" class="btn btn-large btn-primary">Next</button>
