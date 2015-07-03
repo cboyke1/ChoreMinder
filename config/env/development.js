@@ -31,12 +31,12 @@ module.exports = {
 		callbackURL: '/auth/github/callback'
 	},
 	mailer: {
-		from: process.env.MAILER_FROM || 'MAILER_FROM',
+		from: process.env.MAILER_FROM || 'admin@choreminder.net',
 		options: {
-			service: process.env.MAILER_SERVICE_PROVIDER || 'MAILER_SERVICE_PROVIDER',
+			service: process.env.MAILER_SERVICE_PROVIDER || 'email-smtp.us-east-1.amazonaws.com',
 			auth: {
-				user: process.env.MAILER_EMAIL_ID || 'MAILER_EMAIL_ID',
-				pass: process.env.MAILER_PASSWORD || 'MAILER_PASSWORD'
+				user: process.env.MAILER_EMAIL_ID || 'AKIAILLGPZJ7U2IGMDCA',
+				pass: process.env.MAILER_PASSWORD || 'AlbmnvDKoQb+91GF3CprpZagITs09shbtI1NaPnDeemz'
 			}
 		}
 	}

@@ -1,3 +1,4 @@
-@echo off
-echo MAKE SURE to RUN webdriver-manager start in another window
-protractor conf.js
+call protractor conf1.js
+call protractor conf2.js
+call protractor conf3.js
+call protractor conf4.js

@@ -10,7 +10,7 @@ describe('Admin Delete Test Family', function() {
   });
   describe('step 2', function() {
     it('should display login form', function() {
-      element(by.id('username')).sendKeys('admin@admin.com');
+      element(by.id('username')).sendKeys('admin');
       element(by.id('password')).sendKeys('password');
       element(by.id('signin')).click();
     });
@@ -35,7 +35,7 @@ describe('Admin Delete Test Family', function() {
 
   describe('step 5', function() {
     it('should sign out', function() {
-      browser.get('http://localhost/auth/signout');
+      browser.get('http://localhost/#!/signout');
     });
   });
 

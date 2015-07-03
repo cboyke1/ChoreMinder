@@ -22,6 +22,8 @@ exports.signup = function(req, res) {
 	var user = new User(req.body);
 	var message = null;
 
+	console.log('USER SIGNUP');
+	console.log(user);
 	// Add missing user fields
 	user.provider = 'local';
 	user.displayName = user.firstName + ' ' + user.lastName;
@@ -67,20 +69,21 @@ exports.signin = function(req, res, next) {
 				if (err) {
 					res.status(400).send(err);
 				} else {
-					console.log('issue remember me cookie');
-					//
-					//if (!req.body.remember_me) { return done(null, user); }
-
-					Token.issueToken(user, function(err, token) {
-						if (err) {
-							console.log(err);
-							res.status(400).send(err);
-						} else {
-							console.log('sending cookie: ');
-						 	res.cookie('remember_me', token, { maxAge: 1000*3600*24*365 });
-							res.jsonp(user);
-						}
-					});
+					if(req.body.remember_me) {
+						console.log('issue remember me cookie');
+						Token.issueToken(user, function(err, token) {
+							if (err) {
+								console.log(err);
+								res.status(400).send(err);
+							} else {
+								console.log('sending cookie: ');
+							 	res.cookie('remember_me', token, { maxAge: 1000*3600*24*365 });
+								res.jsonp(user);
+							}
+						});
+					} else {
+						res.jsonp(user);
+					}
 				}
 			});
 		}
@@ -91,6 +94,7 @@ exports.signin = function(req, res, next) {
  * Signout
  */
 exports.signout = function(req, res) {
+	console.log('Sign out - clear remember me');
 	res.clearCookie('remember_me');
 	req.logout();
 	res.redirect('/');

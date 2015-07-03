@@ -12,7 +12,7 @@ describe('Child Complete Chore', function() {
   });
   describe('step 2', function() {
     it('should display login form', function() {
-      element(by.id('username')).sendKeys('testc1@example.com');
+      element(by.id('username')).sendKeys('testchild1');
       element(by.id('password')).sendKeys('password');
       element(by.id('signin')).click();
     });
@@ -21,7 +21,7 @@ describe('Child Complete Chore', function() {
   describe('step 3', function() {
     it('should display home page for child', function() {
       var header = element(by.id('pt-header'));
-      expect(header.getText()).toContain('Welcome, Child 1 Test.');
+      expect(header.getText()).toContain('Welcome, Test Child 1.');
     });
   });
 
@@ -35,11 +35,10 @@ describe('Child Complete Chore', function() {
     it('create and save new chore', function() {
       var children = element.all(by.repeater('u in initData.family.children'));
       expect(children.count()).toEqual(2);
-      //var input = children.first().element(by.tagName('input'));
-      //input.click();
+
 
       var chores = element.all(by.repeater('c in initData.chores'));
-      expect(chores.count()).toEqual(2);
+      expect(chores.count()).toEqual(5);
       chores.first().element(by.tagName('input')).click();
 
       element(by.id('pt-btn-create')).click();
@@ -49,8 +48,10 @@ describe('Child Complete Chore', function() {
 
   describe('step 6', function() {
     it('new chore should appear at top of list on home page', function() {
+      var header = element(by.id('pt-header'));
+      expect(header.getText()).toContain('Welcome, Test Child 1.');
       var activities = element.all(by.repeater('activity in activities'));
-      //expect(activities.count()).toEqual(activityCount+1);
+      // TO DO - VERIFY NEW ACTIVITY ADDED
     });
   });
 

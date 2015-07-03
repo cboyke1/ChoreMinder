@@ -37,8 +37,8 @@ exports.create = function(req, res) {
 		user.roles.push('parent');
 		user.family=family;
 		// Don't overwrite salt or pw.
-		user.salt = undefined;
-		user.password = undefined;
+		delete user.salt;
+		delete user.password;
 		user.save(function(err) {
 			if (err) {
 				return handleErr(err,res);

@@ -12,10 +12,11 @@ describe('New Family Sign Up', function() {
     });
   });
   describe('step 2', function() {
-    it('should display login form', function() {
-      element(by.id('firstName')).sendKeys('Test FName');
-      element(by.id('lastName')).sendKeys('Test LName');
-      element(by.id('email')).sendKeys('testParent@example.com');
+    it('should display signup page', function() {
+      element(by.id('firstName')).sendKeys('TestparentF');
+      element(by.id('lastName')).sendKeys('TestparentL');
+      element(by.id('email')).sendKeys('testparent@choreminder.net');
+      element(by.id('username')).sendKeys('testparent');
       element(by.id('password')).sendKeys('password');
       element(by.id('pt-signup')).click();
     });
@@ -34,8 +35,9 @@ describe('New Family Sign Up', function() {
     it('should display Add Child', function() {
       var header = element(by.id('pt-header'));
       expect(header.getText()).toEqual('Add Child');
-      element(by.id('firstName')).sendKeys('Test Child FName');
-      element(by.id('email')).sendKeys('testChild@example.com');
+      element(by.id('firstName')).sendKeys('Test Child 1');
+      element(by.id('email')).sendKeys('testchild1@choreminder.net');
+      element(by.id('username')).sendKeys('testchild1');
       element(by.id('password')).sendKeys('password');
       element(by.id('pt-next')).click();
 
@@ -46,12 +48,34 @@ describe('New Family Sign Up', function() {
     it('Add another y/n page', function() {
       var header = element(by.id('pt-header'));
       expect(header.getText()).toEqual('Add Another Child?');
-      element(by.id('pt-add-another-no')).click();
+      element(by.id('pt-add-another-yes')).click();
 
     });
   });
 
   describe('step 6', function() {
+    it('should add second child', function() {
+      var header = element(by.id('pt-header'));
+      expect(header.getText()).toEqual('Add Child');
+      element(by.id('firstName')).sendKeys('Test Child 2');
+      element(by.id('email')).sendKeys('testchild2@choreminder.net');
+      element(by.id('username')).sendKeys('testchild2');
+      element(by.id('password')).sendKeys('password');
+      element(by.id('pt-next')).click();
+
+    });
+  });
+
+  describe('step 7', function() {
+    it('Add another y/n page', function() {
+      var header = element(by.id('pt-header'));
+      expect(header.getText()).toEqual('Add Another Child?');
+      element(by.id('pt-add-another-no')).click();
+
+    });
+  });
+
+  describe('step 8', function() {
     it('should display Chores page', function() {
       var header = element(by.id('pt-header'));
       expect(header.getText()).toEqual('Chores');
@@ -59,7 +83,7 @@ describe('New Family Sign Up', function() {
     });
   });
 
-  describe('step 7', function() {
+  describe('step 9', function() {
     it('should display family home page', function() {
       var header = element(by.id('pt-family-name'));
       expect(header.getText()).toEqual('PT Test Family');
@@ -67,9 +91,9 @@ describe('New Family Sign Up', function() {
   });
 
 
-  describe('step 8', function() {
+  describe('step 10', function() {
     it('should sign out', function() {
-      browser.get('http://localhost/auth/signout');
+      browser.get('http://localhost/#!/signout');
     });
   });
 

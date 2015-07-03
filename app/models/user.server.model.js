@@ -62,12 +62,12 @@ var UserSchema = new Schema({
 	username: {
 		type: String,
 		unique: 'Username must be unique',
+		required: 'Username is required',
 		trim: true
 	},
 	password: {
 		type: String,
-		default: ''
-		//validate: [validateLocalStrategyPassword, 'Password should be longer']
+		validate: [validateLocalStrategyPassword, 'Password should be longer']
 	},
 	salt: {
 		type: String
@@ -126,11 +126,11 @@ UserSchema.virtual('admin').get(function() {
  * Hook a pre save method to hash the password
  */
 UserSchema.pre('save', function(next) {
-	if (this.password && this.password.length > 6) {
+	if (this.password && this.password.length > 4) {
 		this.salt = new Buffer(crypto.randomBytes(16).toString('base64'), 'base64');
 		this.password = this.hashPassword(this.password);
 	}
-
+	console.log('pre save ' + this.password);
 	next();
 });
 
