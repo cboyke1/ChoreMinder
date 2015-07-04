@@ -1,0 +1,5 @@
+7/3/15
+- Username is now separate from email address, which is optional.
+- Fixed issues with username being auto-capitalized on iPhone
+- "forgot password" functionality now works properly by sending an email to your registered email address
+- "Remember Me" now works correctly

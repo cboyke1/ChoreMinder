@@ -16,9 +16,12 @@
 					<input type="email" id="email" name="email" class="form-control" data-ng-model="user.email" placeholder="Email">
 				</div>
 				<div class="form-group">
-					<label for="phone">Mobile Number</label>
-					<input type="text" id="phone" name="phone" class="form-control" data-ng-model="user.phone" ui-mask="(999) 999-9999">
+					<label for="email">Username</label>
+					<input type="text" id="username" name="username"
+					autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false"
+					class="form-control" data-ng-model="user.username" placeholder="username">
 				</div>
+
 				<div class="text-center form-group">
 					<button type="submit" class="btn btn-large btn-primary">Save Profile</button>
 				</div>

@@ -17,7 +17,9 @@
 				</div>
 				<div class="form-group">
 					<label for="username">Username<font color="red">*</font></label>
-					<input id="username" name="username" class="form-control" data-ng-model="credentials.username" placeholder="username" ng-required="true">
+					<input id="username" name="username"
+					autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false"
+					class="form-control" data-ng-model="credentials.username" placeholder="username" ng-required="true">
 				</div>
 				<div class="form-group">
 					<label for="password">Password<font color="red">*</font></label>
