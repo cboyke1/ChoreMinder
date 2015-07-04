@@ -69,7 +69,7 @@ exports.signin = function(req, res, next) {
 				if (err) {
 					res.status(400).send(err);
 				} else {
-					if(req.body.remember_me) {
+					if(req.body.rememberMe) {
 						console.log('issue remember me cookie');
 						Token.issueToken(user, function(err, token) {
 							if (err) {

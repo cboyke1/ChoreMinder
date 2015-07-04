@@ -33,10 +33,10 @@ module.exports = {
 	mailer: {
 		from: process.env.MAILER_FROM || 'admin@choreminder.net',
 		options: {
-			service: process.env.MAILER_SERVICE_PROVIDER || 'email-smtp.us-east-1.amazonaws.com',
+			service: process.env.MAILER_SERVICE_PROVIDER || 'smtp.gmail.com',
 			auth: {
-				user: process.env.MAILER_EMAIL_ID || 'AKIAILLGPZJ7U2IGMDCA',
-				pass: process.env.MAILER_PASSWORD || 'AlbmnvDKoQb+91GF3CprpZagITs09shbtI1NaPnDeemz'
+				user: process.env.MAILER_EMAIL_ID || 'admin@choreminder.net',
+				pass: process.env.MAILER_PASSWORD || 'PW'
 			}
 		}
 	}
