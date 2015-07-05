@@ -1,0 +1,2 @@
+{"v":0,"level":30,"name":"newrelic","hostname":"Egregious","pid":4092,"time":"2015-07-05T15:18:31.103Z","msg":"Reporting to: https://rpm.newrelic.com/accounts/1034744/applications/6597836","component":"new_relic_response"}
+{"v":0,"level":30,"name":"newrelic","hostname":"Egregious","pid":4092,"time":"2015-07-05T15:18:31.104Z","msg":"Connected to collector-147.newrelic.com:443 with agent run ID 28337498884219628.","component":"collector_api"}

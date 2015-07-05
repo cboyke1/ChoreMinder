@@ -11,7 +11,7 @@ var _ = require('lodash'),
 	config = require('../../../config/config'),
 	nodemailer = require('nodemailer'),
 	async = require('async'),
-	email = require('../../../auth/email'),
+	auth = require('../../../auth/auth'),
 	crypto = require('crypto');
 
 /**
@@ -67,7 +67,7 @@ exports.forgot = function(req, res, next) {
 		// If valid email, send reset email using service
 		function(emailHTML, user, done) {
 			console.log('logging in to email');
-			var pw = email();
+			var pw = auth.emailPassword();
 			var smtpTransport = nodemailer.createTransport({
 				service: 'Gmail',
 				auth: {
