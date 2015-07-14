@@ -10,3 +10,5 @@ public/dist
 app/tests/coverage/
 .bower-*/
 .idea/
+
+*.log

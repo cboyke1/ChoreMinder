@@ -1,6 +1,6 @@
 {
 	"name": "choreminder",
-	"description": "Full-Stack JavaScript with MongoDB, Express, AngularJS, and Node.js",
+	"description": "Chore Management for families",
 	"version": "0.0.1",
 	"author": "Chris Boyke",
 	"engines": {

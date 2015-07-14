@@ -147,12 +147,14 @@ function setOrder(id,i,res) {
 }
 
 exports.reorder = function(req,res) {
-	console.log(req.body.chores);
-	var chores = req.body.chores;
-
-	for(var i=0 ; i < chores.length ; i++) {
-		var choreId = chores[i]._id;
-		setOrder(choreId,i,res);
+	if(req.user.admin || req.user.parent) {
+		var chores = req.body.chores;
+		for(var i=0 ; i < chores.length ; i++) {
+			var choreId = chores[i]._id;
+			setOrder(choreId,i,res);
+		}
+	} else {
+		return res.status(403).send('User is not authorized');
 	}
 };
 
@@ -160,6 +162,8 @@ exports.reorder = function(req,res) {
  * Chore authorization middleware
  */
 exports.hasAuthorization = function(req, res, next) {
+
+
 	if(req.user.admin || (req.user.parent && req.user.family.toString() === req.chore.family.toString())) {
 		next();
 	} else {

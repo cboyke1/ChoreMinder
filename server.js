@@ -2,8 +2,8 @@
 /**
  * Module dependencies.
  */
-var auth = require('./auth/auth');
 var newrelic = require('newrelic');
+var auth = require('./auth/auth');
 newrelic.agent.config.license_key = auth.newRelicKey();
 var init = require('./config/init')(),
 	config = require('./config/config'),
